@@ -1,0 +1,66 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from silaLibService WSDL service -->
+
+  <service name="silaLibPort" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://sila-standard.org"/>
+      <parameter name="wsdlServiceElement" value="silaLibService"/>
+      <parameter name="schemaUnqualified" value="http://sila-standard.org"/>
+      <parameter name="wsdlServicePort" value="silaLibPort"/>
+      <parameter name="className" value="org.sila_standard.SilaLibBindingSkeleton"/>
+      <parameter name="wsdlPortType" value="silaLibPortType"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <parameter name="allowedMethods" value="*"/>
+
+      <typeMapping
+        xmlns:ns="http://sila-standard.org"
+        qname="ns:Substate"
+        type="java:org.sila_standard.Substate"
+        serializer="org.apache.axis.encoding.ser.EnumSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.EnumDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://sila-standard.org"
+        qname="ns:CommandDescription"
+        type="java:org.sila_standard.CommandDescription"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://sila-standard.org"
+        qname="ns:SiLAReturnValue"
+        type="java:org.sila_standard.SiLAReturnValue"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://sila-standard.org"
+        qname="ns:State"
+        type="java:org.sila_standard.State"
+        serializer="org.apache.axis.encoding.ser.EnumSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.EnumDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://sila-standard.org"
+        qname="ns:DeviceIdentification"
+        type="java:org.sila_standard.DeviceIdentification"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

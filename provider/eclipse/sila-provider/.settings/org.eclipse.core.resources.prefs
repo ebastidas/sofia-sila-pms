@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//src/org/sila_standard/CommandDescription.java=UTF-8
+encoding//src/org/sila_standard/DeviceIdentification.java=UTF-8
+encoding//src/org/sila_standard/SiLAReturnValue.java=UTF-8
+encoding//src/org/sila_standard/SilaLibBindingImpl.java=UTF-8
+encoding//src/org/sila_standard/SilaLibBindingSkeleton.java=UTF-8
+encoding//src/org/sila_standard/SilaLibBindingStub.java=UTF-8
+encoding//src/org/sila_standard/SilaLibPortType.java=UTF-8
+encoding//src/org/sila_standard/SilaLibService.java=UTF-8
+encoding//src/org/sila_standard/SilaLibServiceLocator.java=UTF-8
+encoding//src/org/sila_standard/State.java=UTF-8
+encoding//src/org/sila_standard/Substate.java=UTF-8
+encoding//src/org/sila_standard/holders/CommandDescriptionArrayHolder.java=UTF-8
+encoding//src/org/sila_standard/holders/CommandDescriptionHolder.java=UTF-8
+encoding//src/org/sila_standard/holders/DeviceIdentificationHolder.java=UTF-8
+encoding//src/org/sila_standard/holders/SiLAReturnValueHolder.java=UTF-8
+encoding//src/org/sila_standard/holders/StateHolder.java=UTF-8
