@@ -1,0 +1,151 @@
+<template name="layout">
+	{{#if currentUser}}
+		{{> PrivateLayout}}
+	{{else}}
+		{{> PublicLayout}}
+	{{/if}}
+</template>
+
+<template name="PublicLayout">
+	<div id="wrap">
+		<div class="navbar navbar-fixed-top navbar-default" role="navigation">
+			<div class="navbar-container container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">
+							Toggle navigation
+						</span>
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+					</button>
+					<a class="navbar-brand" href="#">
+						SiLA Client
+					</a>
+				</div>
+				<div id="menu" class="collapse navbar-collapse">
+					{{> PublicLayoutLeftMenu}}{{> PublicLayoutRightMenu}}
+				</div>
+			</div>
+		</div>
+		<div class="navbar-spacer">
+		</div>
+		{{> yield}}
+	</div>
+	<div id="footer">
+		<div class="footer-container container">
+			<p class="text-muted">
+			</p>
+		</div>
+	</div>
+</template>
+
+<template name="PublicLayoutLeftMenu">
+	<ul id="menu-items" class="nav navbar-nav">
+		<li id="menu-item-simple" class="{{menuItemClass 'home_public'}}">
+			<a href="{{pathFor 'home_public'}}">
+				Home
+			</a>
+		</li>
+	</ul>
+</template>
+
+<template name="PublicLayoutRightMenu">
+	<ul id="menu-items" class="nav navbar-nav navbar-right">
+		<li id="menu-item-simple" class="{{menuItemClass 'register'}}">
+			<a href="{{pathFor 'register'}}">
+				Register
+			</a>
+		</li>
+		<li id="menu-item-simple" class="{{menuItemClass 'login'}}">
+			<a href="{{pathFor 'login'}}">
+				Login
+			</a>
+		</li>
+	</ul>
+</template>
+
+<template name="PrivateLayout">
+	<div id="wrap">
+		<div class="navbar navbar-fixed-top navbar-default" role="navigation">
+			<div class="navbar-container container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">
+							Toggle navigation
+						</span>
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+					</button>
+					<a class="navbar-brand" href="#">
+						SiLA Client
+					</a>
+				</div>
+				<div id="menu" class="collapse navbar-collapse">
+					{{> PrivateLayoutLeftMenu}}{{> PrivateLayoutRightMenu}}
+				</div>
+			</div>
+		</div>
+		<div class="navbar-spacer">
+		</div>
+		{{> yield}}
+	</div>
+	<div id="footer">
+		<div class="footer-container container">
+			<p class="text-muted">
+			</p>
+		</div>
+	</div>
+</template>
+
+<template name="PrivateLayoutLeftMenu">
+	<ul id="menu-items" class="nav navbar-nav">
+		<li id="menu-item-simple" class="{{menuItemClass 'home_private'}}">
+			<a href="{{pathFor 'home_private'}}">
+				Home
+			</a>
+		</li>
+		<li id="menu-item-simple" class="{{menuItemClass 'methods'}}">
+			<a href="{{pathFor 'methods'}}">
+				Methods
+			</a>
+		</li>
+		<li id="menu-item-simple" class="{{menuItemClass 'devices'}}">
+			<a href="{{pathFor 'devices'}}">
+				Devices
+			</a>
+		</li>
+	</ul>
+</template>
+
+<template name="PrivateLayoutRightMenu">
+	<ul id="menu-items" class="nav navbar-nav navbar-right">
+		<li id="menu-item-dropdown" class="dropdown ">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				{{userEmail}}
+				<b class="caret">
+				</b>
+			</a>
+			<ul id="menu-items" class="dropdown-menu">
+				<li class="{{menuItemClass 'user_settings'}}">
+					<a href="{{pathFor 'user_settings'}}">
+						Settings
+					</a>
+				</li>
+				<li class="{{menuItemClass 'logout'}}">
+					<a href="{{pathFor 'logout'}}">
+						Logout
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</template>
+

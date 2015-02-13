@@ -1,0 +1,114 @@
+<template name="UserSettingsProfile">
+	<div class="page-container container" id="content">
+		<div class="row" id="title_row">
+			<div class="col-md-12">
+				<div id="page_menu" class="pull-right">
+				</div>
+			</div>
+		</div>
+		{{> UserSettingsProfileEditForm}}
+	</div>
+</template>
+
+<template name="UserSettingsProfileEditForm">
+	<div class="">
+		<h2 id="component-title">
+			Edit your profile
+		</h2>
+		<form id="form" role="form">
+			{{#if errorMessage}}
+			<div class="alert alert-warning">
+				{{errorMessage}}
+			</div>
+			{{/if}}		
+		
+			{{#if infoMessage}}
+			<div class="alert alert-success">
+				{{infoMessage}}
+			</div>
+			{{/if}}
+			<div class="form-group text field-profile-name">
+				<label for="profile.name">
+					Name
+				</label>
+				<div class="input-div">
+					<input type="text" name="profile.name" value="{{current_user_data.profile.name}}" class="form-control" autofocus="autofocus" required="required" data-type="string">
+					<span id="help-text" class="help-block">
+					</span>
+					<span id="error-text" class="help-block">
+					</span>
+				</div>
+			</div>
+			<div class="form-group text field-profile-email">
+				<label for="profile.email">
+					E-mail
+				</label>
+				<div class="input-div">
+					<input type="text" name="profile.email" value="{{current_user_data.profile.email}}" class="form-control" required="required" data-type="email">
+					<span id="help-text" class="help-block">
+					</span>
+					<span id="error-text" class="help-block">
+					</span>
+				</div>
+			</div>
+			<div class="form-group text field-profile-facebook">
+				<label for="profile.facebook">
+					Facebook URL
+				</label>
+				<div class="input-div">
+					<input type="text" name="profile.facebook" value="{{current_user_data.profile.facebook}}" class="form-control" data-type="string">
+					<span id="help-text" class="help-block">
+					</span>
+					<span id="error-text" class="help-block">
+					</span>
+				</div>
+			</div>
+			<div class="form-group text field-profile-google">
+				<label for="profile.google">
+					Google+ URL
+				</label>
+				<div class="input-div">
+					<input type="text" name="profile.google" value="{{current_user_data.profile.google}}" class="form-control" data-type="string">
+					<span id="help-text" class="help-block">
+					</span>
+					<span id="error-text" class="help-block">
+					</span>
+				</div>
+			</div>
+			<div class="form-group text field-profile-twitter">
+				<label for="profile.twitter">
+					Twitter ID
+				</label>
+				<div class="input-div">
+					<input type="text" name="profile.twitter" value="{{current_user_data.profile.twitter}}" class="form-control" data-type="string">
+					<span id="help-text" class="help-block">
+					</span>
+					<span id="error-text" class="help-block">
+					</span>
+				</div>
+			</div>
+			<div class="form-group text field-profile-website">
+				<label for="profile.website">
+					Website URL
+				</label>
+				<div class="input-div">
+					<input type="text" name="profile.website" value="{{current_user_data.profile.website}}" class="form-control" data-type="string">
+					<span id="help-text" class="help-block">
+					</span>
+					<span id="error-text" class="help-block">
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="submit-div">
+					<button id="form-submit-button" class="btn btn-success" type="submit">
+						<span class="fa fa-check">
+						</span>
+						Save
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</template>
+

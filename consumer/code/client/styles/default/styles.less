@@ -1,0 +1,215 @@
+@import "../bootstrap3-less/bootstrap.import.less";
+
+@import "theme.import.less";
+
+// variables
+
+@footer_height: 60px;
+
+
+// **** LAYOUT ****
+
+html,
+body {
+  height: 100%;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto (@footer_height * -1);
+  /* Pad bottom by footer height */
+  padding: 0 0 @footer_height;
+}
+
+/* Fixed height of the footer */
+#footer {
+  height: @footer_height;
+}
+
+.navbar-spacer {
+	height: 50px;
+}
+
+.nav-stacked li {
+	margin-top: 2px;
+}
+
+#footer .text-muted {
+  margin: 19px 0;
+}
+
+#content .container, #subcontent .container {
+	max-width: 100%;
+}
+
+p {
+	font-size: 16px;
+}
+
+#jumbotron-image {
+	width: auto;
+	height: 1em;
+	margin-right: 20px;
+}
+
+.nav-tabs {
+	margin-bottom: 10px;
+}
+
+.modal-backdrop {
+	z-index: @zindex-modal - 1;
+}
+
+.form-horizontal .control-label {
+	text-align: left;
+}
+
+.modal-body #component-title {
+	margin-top: 0;
+}
+
+// **** SIDEBAR ***
+
+.sidebar {
+	position: fixed;
+	top: 51px;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
+	display: block;
+	padding: 20px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.menu-item-collapse div.collapse {
+	padding-left: 10px;
+}
+
+.menu-item-collapse div.collapse li a {
+	padding-right: 5px;	
+}
+
+// **** ACCOUNT ****
+
+.account-form {
+	max-width: 400px;
+	padding: 15px;
+	margin: 0 auto;
+}
+
+.account-form .form-control {
+	margin-bottom: 15px;
+	height: 42px;
+	padding: 10px 10px;
+	font-size: 16px;
+}
+
+.account-form-text-after {
+	margin-top: 10px;
+	font-size: 14px;
+}
+
+.accounts-info-box {
+	max-width: 400px;
+	padding: 15px;
+	margin: 0 auto;	
+}
+
+/* ------------------ */
+
+.td-icon {
+	width: 30px;
+}
+
+.td-icon .fa {
+	cursor: pointer;
+	color: @text-muted;
+}
+
+.td-icon .fa:hover {
+	color: @text-color;
+}
+
+.th-sortable {
+	cursor: pointer;	
+}
+
+.table-hover tr {
+	cursor: pointer;
+}
+
+#dataview-controls {
+	margin-bottom: 10px;
+}
+
+#dataview-controls-search {
+	display: inline;
+}
+
+
+// **** OBJECT TREE ****
+
+.well.object-tree-container h2,
+.well.object-tree-container h3 {
+	margin-top: 0;
+}
+
+.well.object-tree-container {
+	width: 100%;
+	overflow-y: auto;
+	padding: 5px;
+}
+
+ul.object-tree li a {
+	display: inline-block;
+}
+
+ul.object-tree {
+	padding-left: 10px;	
+}
+
+ul.object-tree ul.object-tree {
+	padding-left: 20px;	
+}
+
+li.collapsed ul {
+	display: none;	
+}
+
+.object-tree.nav > li > a {
+	padding: 5px 10px;
+}
+
+// **** OBJECT FORM ****
+
+.well.object-form-container {
+	width: 100%;
+	padding: 10px 15px;
+}
+
+.well.object-form-container h2,
+.well.object-form-container h3 {
+	margin-top: 0;
+}
+
+.datepicker-dropdown {
+	z-index: 10000 !important;
+	padding: 4px;
+}
+
+// examples page - should be moved to custom.less
+
+.example-img {
+	width: 400px;
+	height: auto;
+}
+
+// --
+
+#page-close-button {
+	margin: 21px 0 10px 0;
+}

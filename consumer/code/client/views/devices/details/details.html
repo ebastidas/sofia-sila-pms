@@ -1,0 +1,94 @@
+<template name="DevicesDetails">
+	<div class="page-container container" id="content">
+		<div class="row" id="title_row">
+			<div class="col-md-12">
+				<div id="page_menu" class="pull-right">
+				</div>
+			</div>
+		</div>
+		{{> DevicesDetailsDetailsForm}}
+	</div>
+</template>
+
+<template name="DevicesDetailsDetailsForm">
+	<div class="">
+		<h2 id="component-title">
+			<a href="#" id="form-back-button" class="btn btn-default" title="back">
+				<span class="fa fa-chevron-left">
+				</span>
+			</a>
+			Details
+		</h2>
+		<form id="form" role="form">
+			{{#if errorMessage}}
+			<div class="alert alert-warning">
+				{{errorMessage}}
+			</div>
+			{{/if}}		
+		
+			{{#if infoMessage}}
+			<div class="alert alert-success">
+				{{infoMessage}}
+			</div>
+			{{/if}}
+			<div class="form-group text field-sila-device-class-id">
+				<label for="silaDeviceClassId">
+					SiLA Class
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.silaDeviceClassId}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-name">
+				<label for="name">
+					Name
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.name}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-url">
+				<label for="url">
+					URL
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.url}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-status">
+				<label for="status">
+					Status
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.status}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-note">
+				<label for="note">
+					Note (optional)
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.note}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="submit-div">
+					<a href="#" id="form-close-button" class="btn btn-primary">
+						OK
+					</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</template>
+
