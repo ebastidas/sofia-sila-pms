@@ -1,0 +1,1019 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://sila-standard.org" xmlns:s0="http://sila-standard.org" targetNamespace="http://sila-standard.org" name="silaLibService">
+	<!-- types-->
+	<wsdl:types>
+		<xsd:schema elementFormDefault="unqualified" targetNamespace="http://sila-standard.org">
+			<xsd:element name="Delay">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="duration" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DelayResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="DelayResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReturnError">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="success" minOccurs="0" maxOccurs="1" type="xsd:boolean"/>
+						<xsd:element name="returnCode" minOccurs="0" maxOccurs="1" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReturnErrorResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="ReturnErrorResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendErrorEvent">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendErrorEventResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="SendErrorEventResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendStatusEvent">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="duration" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendStatusEventResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="SendStatusEventResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendDataEvent">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="countOfEvent" minOccurs="0" maxOccurs="1" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendDataEventResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="SendDataEventResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendDictionaryResult">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="countOfKeyValuePairs" minOccurs="0" maxOccurs="1" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendDictionaryResultResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="SendDictionaryResultResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendArrayResult">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="countOfValues" minOccurs="0" maxOccurs="1" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendArrayResultResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="SendArrayResultResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendSimpleResult">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendSimpleResultResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="SendSimpleResultResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendComplexResult">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SendComplexResultResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="SendComplexResultResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Abort">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AbortResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="AbortResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DoContinue">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DoContinueResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="DoContinueResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDeviceIdentification">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetDeviceIdentificationResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="GetDeviceIdentificationResult" type="s0:SiLAReturnValue"/>
+						<xsd:element name="deviceDescription" minOccurs="1" maxOccurs="1" type="s0:DeviceIdentification"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetStatus">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="GetStatusResult" type="s0:SiLAReturnValue"/>
+						<xsd:element name="deviceId" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="state" minOccurs="1" maxOccurs="1" type="s0:State"/>
+						<xsd:element name="subStates" minOccurs="0" maxOccurs="unbounded" type="s0:CommandDescription"/>
+						<xsd:element name="locked" minOccurs="1" maxOccurs="1" type="xsd:boolean"/>
+						<xsd:element name="PMSId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="currentTime" minOccurs="1" maxOccurs="1" type="xsd:dateTime"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Initialize">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="InitializeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="InitializeResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetConfiguration">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="configLevel" minOccurs="0" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="password" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetConfigurationResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="GetConfigurationResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SetConfiguration">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="configLevel" minOccurs="0" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="password" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="configXML" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SetConfigurationResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="SetConfigurationResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="LockDevice">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="lockTimeout" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="eventReceiverURI" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="PMSId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="LockDeviceResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="LockDeviceResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Pause">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="PauseResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="PauseResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Reset">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="deviceId" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="eventReceiverURI" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="PMSId" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="errorHandlingTimeout" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+						<xsd:element name="simulationMode" minOccurs="1" maxOccurs="1" type="xsd:boolean"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ResetResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="ResetResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UnlockDevice">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" minOccurs="1" maxOccurs="1" type="xsd:int"/>
+						<xsd:element name="lockId" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UnlockDeviceResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" maxOccurs="1" name="UnlockDeviceResult" type="s0:SiLAReturnValue"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="SiLAReturnValue">
+				<xsd:sequence>
+					<xsd:element minOccurs="1" maxOccurs="1" name="returnCode" type="xsd:int"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="duration" type="xsd:string"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="deviceClass" type="xsd:int"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="CommandDescription">
+				<xsd:sequence>
+					<xsd:element minOccurs="1" maxOccurs="1" name="requestId" type="xsd:int"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="commandName" type="xsd:string"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="queuePosition" type="xsd:int"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="startedAt" type="xsd:dateTime"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="currentState" type="s0:Substate"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="dataWaiting" type="xsd:int"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="State">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="inError"/>
+					<xsd:enumeration value="errorHandling"/>
+					<xsd:enumeration value="idle"/>
+					<xsd:enumeration value="startup"/>
+					<xsd:enumeration value="standby"/>
+					<xsd:enumeration value="busy"/>
+					<xsd:enumeration value="paused"/>
+					<xsd:enumeration value="initializing"/>
+					<xsd:enumeration value="resetting"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="Substate">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="asynchPaused"/>
+					<xsd:enumeration value="pauseRequested"/>
+					<xsd:enumeration value="processing"/>
+					<xsd:enumeration value="responseWaiting"/>
+					<xsd:enumeration value="none"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="DeviceIdentification">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="1" name="Wsdl" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="SiLAInterfaceVersion" type="xsd:string"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="SiLADeviceClass" type="xsd:int"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="SiLADeviceClassVersion" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="SiLASubDeviceClass" type="xsd:int"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="DeviceManufacturer" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="DeviceName" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="DeviceSerialNumber" type="xsd:string"/>
+					<xsd:element minOccurs="0" maxOccurs="1" name="DeviceFirmwareVersion" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="cExampleEnums">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="kEnum_1"/>
+					<xsd:enumeration value="kEnum_2"/>
+					<xsd:enumeration value="kEnum_3"/>
+					<xsd:enumeration value="kEnum_4"/>
+					<xsd:enumeration value="kEnum_5"/>
+					<xsd:enumeration value="kEnum_0"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:schema>
+	</wsdl:types>
+	<!-- messages-->
+	<wsdl:message name="DelayRequest">
+		<wsdl:part name="parameters" element="s0:Delay"/>
+	</wsdl:message>
+	<wsdl:message name="DelayResponse">
+		<wsdl:part name="parameters" element="s0:DelayResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ReturnErrorRequest">
+		<wsdl:part name="parameters" element="s0:ReturnError"/>
+	</wsdl:message>
+	<wsdl:message name="ReturnErrorResponse">
+		<wsdl:part name="parameters" element="s0:ReturnErrorResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SendErrorEventRequest">
+		<wsdl:part name="parameters" element="s0:SendErrorEvent"/>
+	</wsdl:message>
+	<wsdl:message name="SendErrorEventResponse">
+		<wsdl:part name="parameters" element="s0:SendErrorEventResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SendStatusEventRequest">
+		<wsdl:part name="parameters" element="s0:SendStatusEvent"/>
+	</wsdl:message>
+	<wsdl:message name="SendStatusEventResponse">
+		<wsdl:part name="parameters" element="s0:SendStatusEventResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SendDataEventRequest">
+		<wsdl:part name="parameters" element="s0:SendDataEvent"/>
+	</wsdl:message>
+	<wsdl:message name="SendDataEventResponse">
+		<wsdl:part name="parameters" element="s0:SendDataEventResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SendDictionaryResultRequest">
+		<wsdl:part name="parameters" element="s0:SendDictionaryResult"/>
+	</wsdl:message>
+	<wsdl:message name="SendDictionaryResultResponse">
+		<wsdl:part name="parameters" element="s0:SendDictionaryResultResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SendArrayResultRequest">
+		<wsdl:part name="parameters" element="s0:SendArrayResult"/>
+	</wsdl:message>
+	<wsdl:message name="SendArrayResultResponse">
+		<wsdl:part name="parameters" element="s0:SendArrayResultResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SendSimpleResultRequest">
+		<wsdl:part name="parameters" element="s0:SendSimpleResult"/>
+	</wsdl:message>
+	<wsdl:message name="SendSimpleResultResponse">
+		<wsdl:part name="parameters" element="s0:SendSimpleResultResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SendComplexResultRequest">
+		<wsdl:part name="parameters" element="s0:SendComplexResult"/>
+	</wsdl:message>
+	<wsdl:message name="SendComplexResultResponse">
+		<wsdl:part name="parameters" element="s0:SendComplexResultResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AbortRequest">
+		<wsdl:part name="parameters" element="s0:Abort"/>
+	</wsdl:message>
+	<wsdl:message name="AbortResponse">
+		<wsdl:part name="parameters" element="s0:AbortResponse"/>
+	</wsdl:message>
+	<wsdl:message name="DoContinueRequest">
+		<wsdl:part name="parameters" element="s0:DoContinue"/>
+	</wsdl:message>
+	<wsdl:message name="DoContinueResponse">
+		<wsdl:part name="parameters" element="s0:DoContinueResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetDeviceIdentificationRequest">
+		<wsdl:part name="parameters" element="s0:GetDeviceIdentification"/>
+	</wsdl:message>
+	<wsdl:message name="GetDeviceIdentificationResponse">
+		<wsdl:part name="parameters" element="s0:GetDeviceIdentificationResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetStatusRequest">
+		<wsdl:part name="parameters" element="s0:GetStatus"/>
+	</wsdl:message>
+	<wsdl:message name="GetStatusResponse">
+		<wsdl:part name="parameters" element="s0:GetStatusResponse"/>
+	</wsdl:message>
+	<wsdl:message name="InitializeRequest">
+		<wsdl:part name="parameters" element="s0:Initialize"/>
+	</wsdl:message>
+	<wsdl:message name="InitializeResponse">
+		<wsdl:part name="parameters" element="s0:InitializeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetConfigurationRequest">
+		<wsdl:part name="parameters" element="s0:GetConfiguration"/>
+	</wsdl:message>
+	<wsdl:message name="GetConfigurationResponse">
+		<wsdl:part name="parameters" element="s0:GetConfigurationResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SetConfigurationRequest">
+		<wsdl:part name="parameters" element="s0:SetConfiguration"/>
+	</wsdl:message>
+	<wsdl:message name="SetConfigurationResponse">
+		<wsdl:part name="parameters" element="s0:SetConfigurationResponse"/>
+	</wsdl:message>
+	<wsdl:message name="LockDeviceRequest">
+		<wsdl:part name="parameters" element="s0:LockDevice"/>
+	</wsdl:message>
+	<wsdl:message name="LockDeviceResponse">
+		<wsdl:part name="parameters" element="s0:LockDeviceResponse"/>
+	</wsdl:message>
+	<wsdl:message name="PauseRequest">
+		<wsdl:part name="parameters" element="s0:Pause"/>
+	</wsdl:message>
+	<wsdl:message name="PauseResponse">
+		<wsdl:part name="parameters" element="s0:PauseResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ResetRequest">
+		<wsdl:part name="parameters" element="s0:Reset"/>
+	</wsdl:message>
+	<wsdl:message name="ResetResponse">
+		<wsdl:part name="parameters" element="s0:ResetResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UnlockDeviceRequest">
+		<wsdl:part name="parameters" element="s0:UnlockDevice"/>
+	</wsdl:message>
+	<wsdl:message name="UnlockDeviceResponse">
+		<wsdl:part name="parameters" element="s0:UnlockDeviceResponse"/>
+	</wsdl:message>
+	<!-- portType-->
+	<wsdl:portType name="silaLibPortType">
+		<wsdl:operation name="Delay">
+			<wsdl:documentation>
+        &lt;SiLACommandDescription xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT10S&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot;&gt;
+          &lt;Summary&gt;This command sends a Delay request to the device&lt;/Summary&gt;
+          &lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot;/&gt;
+          &lt;Parameter name=&quot;lockId&quot;/&gt;
+          &lt;Parameter name=&quot;duration&quot; xsi:type=&quot;Duration&quot;/&gt;
+          &lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot;&gt;
+            &lt;Description&gt;Empty response&lt;/Description&gt;
+          &lt;/Response&gt;
+        &lt;/SiLACommandDescription>
+		</wsdl:documentation>
+		<wsdl:input message="tns:DelayRequest"/>
+		<wsdl:output message="tns:DelayResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="ReturnError">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT10S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;return error&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; /&gt;
+				&lt;Parameter name=&quot;lockId&quot; /&gt;
+				&lt;Parameter name=&quot;success&quot; /&gt;
+				&lt;Parameter name=&quot;returnCode&quot; minValue=&quot;1&quot; maxValue=&quot;3000&quot; /&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:ReturnErrorRequest"/>
+		<wsdl:output message="tns:ReturnErrorResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="SendErrorEvent">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT10S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;Send Error Event&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; /&gt;
+				&lt;Parameter name=&quot;lockId&quot; /&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:SendErrorEventRequest"/>
+		<wsdl:output message="tns:SendErrorEventResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="SendStatusEvent">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT10S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;send Status Event&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; /&gt;
+				&lt;Parameter name=&quot;lockId&quot; /&gt;
+				&lt;Parameter name=&quot;duration&quot;  xsi:type=&quot;Duration&quot; /&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:SendStatusEventRequest"/>
+		<wsdl:output message="tns:SendStatusEventResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="SendDataEvent">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT10S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;send data event&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; /&gt;
+				&lt;Parameter name=&quot;lockId&quot; /&gt;
+				&lt;Parameter name=&quot;countOfEvent&quot; minValue=&quot;1&quot; maxValue=&quot;96&quot; /&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;2&quot; &gt;
+					&lt;Description&gt;response description not defined for this command&lt;/Description&gt;
+					&lt;Value name=&quot;pieces&quot; type=&quot;Int&quot; /&gt;
+					&lt;Value name=&quot;weights&quot; type=&quot;Double&quot; /&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:SendDataEventRequest"/>
+		<wsdl:output message="tns:SendDataEventResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="SendDictionaryResult">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT10S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;test to send dictionary result&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; /&gt;
+				&lt;Parameter name=&quot;lockId&quot; /&gt;
+				&lt;Parameter name=&quot;countOfKeyValuePairs&quot; minValue=&quot;1&quot; maxValue=&quot;96&quot; /&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;2&quot; &gt;
+					&lt;Description&gt;response description not defined for this command&lt;/Description&gt;
+					&lt;Value name=&quot;Key&quot; type=&quot;String&quot; /&gt;
+					&lt;Value name=&quot;Value&quot; type=&quot;String&quot; /&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:SendDictionaryResultRequest"/>
+		<wsdl:output message="tns:SendDictionaryResultResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="SendArrayResult">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT10S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;test command to send an Array&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; /&gt;
+				&lt;Parameter name=&quot;lockId&quot; /&gt;
+				&lt;Parameter name=&quot;countOfValues&quot; minValue=&quot;1&quot; maxValue=&quot;96&quot; /&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;2&quot; &gt;
+					&lt;Description&gt;response description not defined for this command&lt;/Description&gt;
+					&lt;Value name=&quot;Value&quot; type=&quot;String&quot; /&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:SendArrayResultRequest"/>
+		<wsdl:output message="tns:SendArrayResultResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="SendSimpleResult">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT10S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;test to send a simple result&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; /&gt;
+				&lt;Parameter name=&quot;lockId&quot; /&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;1&quot; &gt;
+					&lt;Description&gt;response description not defined for this command&lt;/Description&gt;
+					&lt;Value name=&quot;Result&quot; type=&quot;String&quot; /&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:SendSimpleResultRequest"/>
+		<wsdl:output message="tns:SendSimpleResultResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="SendComplexResult">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT10S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;test to send complex result&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; /&gt;
+				&lt;Parameter name=&quot;lockId&quot; /&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;1&quot; &gt;
+					&lt;Description&gt;response description not defined for this command&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:SendComplexResultRequest"/>
+		<wsdl:output message="tns:SendComplexResultResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="Abort">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT0S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;This command aborts all running and pending asynchronous commands of the device.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter is the identification of the PMS which has locked the device.&lt;/Parameter&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:AbortRequest"/>
+		<wsdl:output message="tns:AbortResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="DoContinue">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT0S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;This command enables the continuation of the process for a paused system.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter is the identification of the PMS which has locked the device.&lt;/Parameter&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:DoContinueRequest"/>
+		<wsdl:output message="tns:DoContinueResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="GetDeviceIdentification">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT0S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;This command reports on details of the device.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter is the identification of the PMS which has locked the device.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;deviceDescription&quot; &gt;The Device Identification. It is a SOAP complex type.&lt;/Parameter&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:GetDeviceIdentificationRequest"/>
+		<wsdl:output message="tns:GetDeviceIdentificationResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="GetStatus">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT0S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;This command reports the status of the device.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;deviceId&quot; &gt;The identification the device returns to identify itself at the PMS.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;state&quot; &gt;Status of the device&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;subStates&quot; &gt;Substate of the above state.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;locked&quot; &gt;Lock state of the device (locked=true, unlocked = false)&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;PMSId&quot; &gt;Identification of the PMS that locked the device.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;currentTime&quot; &gt;Time of reporting status information.&lt;/Parameter&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:GetStatusRequest"/>
+		<wsdl:output message="tns:GetStatusResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="Initialize">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT1S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;This command initializes the device.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter is the identification of the PMS which has locked the device.&lt;/Parameter&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:InitializeRequest"/>
+		<wsdl:output message="tns:InitializeResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="GetConfiguration">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT0S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;The GetConfiguration command is used to a retrieve the configuration of a device. It can only be invoked in the standby state.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter is the identification of the PMS, which has locked the device.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;configLevel&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is defines the access level.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;password&quot; &gt;This parameter contains the password for the corresponding configLevel.&lt;/Parameter&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;1&quot; &gt;
+					&lt;Description&gt;The configXML&lt;/Description&gt;
+					&lt;Value name=&quot;configXML&quot; type=&quot;String&quot; /&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:GetConfigurationRequest"/>
+		<wsdl:output message="tns:GetConfigurationResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="SetConfiguration">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT1S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;The SetConfiguration command is used to set the configuration of a device. This command can only be executed in the standby state.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter is the identification of the PMS, which has locked the device.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;configLevel&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is defines the access level.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;password&quot; &gt;This parameter contains the password for the corresponding configLevel.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;configXML&quot; &gt;The xml Document of configXML is formatted as stated in the ParameterSet tag.&lt;/Parameter&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:SetConfigurationRequest"/>
+		<wsdl:output message="tns:SetConfigurationResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="LockDevice">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT0S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;This command locks the device for exclusive use.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter hands over the lock identification of the PMS to the device. The device will only accept further commands, if they use the same lockId.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockTimeout&quot;  xsi:type=&quot;Duration&quot; &gt;If this parameter is omitted, no timeout will be set. Otherwise the device will unlock itself if it does not receive any commands within the timeout period.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;eventReceiverURI&quot; &gt;Service URI of the Service Consumer's event Receiver.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;PMSId&quot; &gt;Id of the PMS in order to identify the PMS that locked a device.&lt;/Parameter&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:LockDeviceRequest"/>
+		<wsdl:output message="tns:LockDeviceResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="Pause">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT0S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;This command pauses the process/workflow in order to enable user intervention.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter is the identification of the PMS which has locked the device.&lt;/Parameter&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:PauseRequest"/>
+		<wsdl:output message="tns:PauseResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="Reset">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT0S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;This command is used to reset the Service Provider at any time from any state.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter is the identification of the PMS which has locked the device.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;deviceId&quot; &gt;The identification the device returns to identify itself at the PMS.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;eventReceiverURI&quot; &gt;Connection information of the Service Consumers event Receiver.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;PMSId&quot; &gt;Id of the PMS in order to identify the PMS that locked a device.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;errorHandlingTimeout&quot;  xsi:type=&quot;Duration&quot; &gt;Timeout until an errorhandling state is changed into an error state.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;simulationMode&quot; &gt;Selects simulation mode.&lt;/Parameter&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:ResetRequest"/>
+		<wsdl:output message="tns:ResetResponse"/>
+	</wsdl:operation>
+	<wsdl:operation name="UnlockDevice">
+		<wsdl:documentation>
+			&lt;SiLACommandDescription isCommonCommand=&quot;true&quot; estimatedDuration=&quot;PT0S&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;http://sila-standard.org/schemata/SoapAnnotation_1.2.xsd&quot; &gt;
+				&lt;Summary&gt;This command is used to unlock the device.&lt;/Summary&gt;
+				&lt;Parameter name=&quot;requestId&quot; minValue=&quot;1&quot; maxValue=&quot;2147483647&quot; &gt;This parameter is the unique identification of this command call.&lt;/Parameter&gt;
+				&lt;Parameter name=&quot;lockId&quot; &gt;This parameter is the identification of the PMS which has locked the device.&lt;/Parameter&gt;
+				&lt;Response xsi:type=&quot;standardResponse&quot; parameterSetCount=&quot;0&quot; &gt;
+					&lt;Description&gt;Empty response&lt;/Description&gt;
+				&lt;/Response&gt;
+			&lt;/SiLACommandDescription&gt;
+		</wsdl:documentation>
+		<wsdl:input message="tns:UnlockDeviceRequest"/>
+		<wsdl:output message="tns:UnlockDeviceResponse"/>
+	</wsdl:operation>
+</wsdl:portType>
+<!-- binding-->
+<wsdl:binding name="silaLibBinding" type="tns:silaLibPortType">
+	<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+	<wsdl:operation name="Delay">
+		<soap:operation soapAction="http://sila-standard.org/Delay" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="ReturnError">
+		<soap:operation soapAction="http://sila-standard.org/ReturnError" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="SendErrorEvent">
+		<soap:operation soapAction="http://sila-standard.org/SendErrorEvent" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="SendStatusEvent">
+		<soap:operation soapAction="http://sila-standard.org/SendStatusEvent" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="SendDataEvent">
+		<soap:operation soapAction="http://sila-standard.org/SendDataEvent" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="SendDictionaryResult">
+		<soap:operation soapAction="http://sila-standard.org/SendDictionaryResult" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="SendArrayResult">
+		<soap:operation soapAction="http://sila-standard.org/SendArrayResult" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="SendSimpleResult">
+		<soap:operation soapAction="http://sila-standard.org/SendSimpleResult" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="SendComplexResult">
+		<soap:operation soapAction="http://sila-standard.org/SendComplexResult" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="Abort">
+		<soap:operation soapAction="http://sila-standard.org/Abort" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="DoContinue">
+		<soap:operation soapAction="http://sila-standard.org/DoContinue" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="GetDeviceIdentification">
+		<soap:operation soapAction="http://sila-standard.org/GetDeviceIdentification" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="GetStatus">
+		<soap:operation soapAction="http://sila-standard.org/GetStatus" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="Initialize">
+		<soap:operation soapAction="http://sila-standard.org/Initialize" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="GetConfiguration">
+		<soap:operation soapAction="http://sila-standard.org/GetConfiguration" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="SetConfiguration">
+		<soap:operation soapAction="http://sila-standard.org/SetConfiguration" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="LockDevice">
+		<soap:operation soapAction="http://sila-standard.org/LockDevice" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="Pause">
+		<soap:operation soapAction="http://sila-standard.org/Pause" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="Reset">
+		<soap:operation soapAction="http://sila-standard.org/Reset" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+	<wsdl:operation name="UnlockDevice">
+		<soap:operation soapAction="http://sila-standard.org/UnlockDevice" style="document"/>
+		<wsdl:input>
+			<soap:body use="literal"/>
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use="literal"/>
+		</wsdl:output>
+	</wsdl:operation>
+</wsdl:binding>
+<!-- service-->
+<wsdl:service name="silaLibService">
+	<wsdl:documentation>WSDL File for infoteam silaLib version 1.3.2.1 based TestDevice</wsdl:documentation>
+	<wsdl:port name="silaLibPort" binding="tns:silaLibBinding">
+		<soap:address location="http://192.168.1.100:18000/TestDevice"/>
+	</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>
