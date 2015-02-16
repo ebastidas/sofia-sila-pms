@@ -44,7 +44,7 @@ Template.DevicesInsertInsertForm.rendered = function() {
 Template.DevicesInsertInsertForm.events({
 	"submit": function(e, t) {
 		e.preventDefault();
-		pageSession.set("devicesInsertInsertFormInfoMessage", "");
+		pageSession.set("devicesInsertInsertFormInfoMessage", "Connecting...");
 		pageSession.set("devicesInsertInsertFormErrorMessage", "");
 		
 		var self = this;
