@@ -40,7 +40,7 @@ Devices.after.insert(function(userId, doc) {
 	var command = "GetDeviceIdentification";
 	var args = {"requestId": "1"};
 
-	var a = Meteor.call('connectDeviceSoap', url, command, args, function (error,response) {
+	Meteor.call('connectDeviceSoap', url, command, args, function (error,response) {
   		// identify the error
   		if (!error) {
 			Devices.update({ _id: doc._id }, { "$set": {"status":"Connected", 
@@ -63,10 +63,6 @@ Devices.after.insert(function(userId, doc) {
 
 		}
 	});
-		
-
-console.log(a);
-	
 			
 });
 

@@ -4,7 +4,7 @@
 		"meta_title": "sila-client",
 		"meta_description": "SiLA Client - SiLA Standard Client Simple, Smart, Open Source",
 		"theme": "bootswatch-paper",
-		"on_user_created_code": "Devices.insert({silaDeviceClassId:'1', silaDeviceClassVersion:'0.97', name: 'Demo Thermo Combi Multidrop', status: 'idle', url: 'http://192.0.0.23:8080/dispenser', ownerId: user._id });",
+		"on_user_created_code": "",
 		"collections": [
 			{
 				"name": "devices",

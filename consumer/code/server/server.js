@@ -127,7 +127,7 @@ Meteor.methods({
 					else{callback(err);}
 				}else{callback(err);}
 			});
-  			}, 2300);//delay for simulation - see the "Connecting..." message
+  			}, 1500);//delay for simulation - see the "Connecting..." message //TODO: Delete in production
 		}
 
 		//wrapping async for Meteor (works sync only)
@@ -210,9 +210,6 @@ Accounts.onCreateUser(function (options, user) {
 	if(options.profile) {
 		user.profile = options.profile;
 	}
-
-	
-Devices.insert({silaDeviceClassId:'1', silaDeviceClassVersion:'0.97', name: 'Demo Thermo Combi Multidrop', status: 'idle', url: 'http://192.0.0.23:8080/dispenser', ownerId: user._id });
 
 	return user;
 });
