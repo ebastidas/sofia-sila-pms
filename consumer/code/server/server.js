@@ -7,6 +7,7 @@ Meteor.startup(function() {
 	}
 
 
+//Add initial documents to the database if empty
 	
 if(!CommonCommandSet.find().count()) {
 	CommonCommandSet.insert({'deviceClassVersion':'0.97','name':'Abort','parameters':'','returnValues':'','0':'M','1':'M','2':'M','3':'M','4':'M','5':'M','6':'M','7':'M','8':'M','9':'M','10':'M','11':'M','12':'M','13':'M','14':'M','15':'M','16':'M','17':'M','18':'M','19':'M','20':'M','21':'M','22':'M','23':'M','24':'M','25':'M','26':'M','27':'M','28':'M','29':'M','30':'M','31':'M','901':'M','902':'M','903':'M','1000':'M'});
@@ -106,6 +107,74 @@ if(!CommonCommandSet.find().count()) {
 	CommonCommandSet.insert({'deviceClassVersion':'0.97','name':'WriteCode ','parameters':'','returnValues':'','0':'','1':'','2':'','3':'','4':'','5':'','6':'','7':'','8':'','9':'','10':'','11':'','12':'','13':'','14':'','15':'','16':'','17':'','18':'','19':'','20':'','21':'','22':'','23':'','24':'','25':'','26':'','27':'','28':'','29':'','30':'','31':'','901':'','902':'','903':'','1000':''});
 	CommonCommandSet.insert({'deviceClassVersion':'0.97','name':'WriteCodeSeries ','parameters':'','returnValues':'','0':'','1':'','2':'','3':'','4':'','5':'','6':'','7':'','8':'','9':'','10':'','11':'','12':'','13':'','14':'','15':'','16':'','17':'','18':'','19':'','20':'','21':'','22':'','23':'','24':'','25':'','26':'','27':'','28':'','29':'','30':'','31':'','901':'','902':'','903':'','1000':''});
 }
+
+
+////////////////////////////////////
+//initialize the SiLA Event Receiver
+
+var http = Meteor.npmRequire('http');
+var soap = Meteor.npmRequire('soap');	  
+
+var fileName=  '../../../../../public/SiLA_example_EventReceiver.xml'; // TODO: change this when deployment 
+var ip = '0.0.0.0'; // // TODO: change this when deployment. Change to fixed ip if necesary (ex. for actelion sila converter -in 192.168.137.10- change this var to 192.168.137.11)
+var port = 8080;
+var path = '/pms'; // path to web service
+
+
+var myService = {
+      EventReceiver: { //Service name
+          EventReceiverSoap: { // Port name
+              ResponseEvent: function(args) {// Operation name
+                var currentdate = new Date(); console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
+                console.log(args);
+                  return {
+                      ResponseEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
+                  };
+              },
+		DataEvent: function(args) {// Operation name
+		  var currentdate = new Date();  console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
+      console.log(args);
+                  return {
+                      DataEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
+                  };
+              },
+		ErrorEvent: function(args) {// Operation name
+		  console.log(args);var currentdate = new Date(); console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
+                  return {
+                      ErrorEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
+                  };
+              },
+		StatusEvent: function(args) {// Operation name
+		  var currentdate = new Date(); console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
+      console.log(args);
+                  return {
+                      StatusEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
+                  };
+              }          
+          }
+      }
+  }
+
+  
+/*
+var xml = Meteor.npmRequire('fs').readFileSync(fileName, 'utf8');
+var server = http.createServer(function(request,response) {
+          response.end("404: Not Found: "+request.url);
+soap.listen(this, path, myService, xml);
+      });
+
+  server.listen(port, ip);
+
+
+
+console.log('SiLA event reciever listening at: http://' + ip + ":" + port);
+
+
+*/
+
+
+////////////////
+
 
 });
 

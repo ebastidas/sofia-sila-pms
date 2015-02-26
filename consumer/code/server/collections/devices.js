@@ -36,6 +36,7 @@ Devices.before.remove(function(userId, doc) {
 
 Devices.after.insert(function(userId, doc) {
 
+
 	var url = doc.url;
 	var command = "GetDeviceIdentification";
 	var args = {"requestId": "1"};
@@ -47,7 +48,7 @@ Devices.after.insert(function(userId, doc) {
 			"name": response.deviceDescription.DeviceManufacturer + " - " + response.deviceDescription.DeviceName, 
 			"silaDeviceClassId": response.deviceDescription.SiLADeviceClass, 
 			"silaDeviceClassVersion": response.deviceDescription.SiLADeviceClassVersion}		
-			/*TODO: Add all the info from the wsdl file - serial number, etc.*/
+			//TODO: Add all the info from the wsdl file - serial number, etc.
 			});
 		  		
 		}
@@ -63,6 +64,8 @@ Devices.after.insert(function(userId, doc) {
 
 		}
 	});
+
+
 			
 });
 

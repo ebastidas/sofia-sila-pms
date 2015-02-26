@@ -48,6 +48,9 @@ Template.DevicesInsertInsertForm.events({
 		pageSession.set("devicesInsertInsertFormErrorMessage", "");
 		
 		var self = this;
+//		var newId;
+//		var newUrl;
+
 
 		function submitAction(msg) {
 			if(!t.find("#form-cancel-button")) {
@@ -56,6 +59,43 @@ Template.DevicesInsertInsertForm.events({
 			}
 
 			Router.go("devices", {});
+			
+/*
+
+//TODO:After a devices is added to db, go back to devices pages, and try to connect in the background
+
+	//var url = 'http://localhost:8080/sila-provider-v0.0.2/services/silaLibPort?wsdl';
+	var command = "GetDeviceIdentification";
+	var args = {"requestId": "1"};
+
+	Meteor.call('connectDeviceSoap', newUrl, command, args, function (error,response) {
+  		// identify the error
+  		if (!error) {
+			Devices.update({ _id: newId }, { "$set": {"status":"Connected", 
+			"name": response.deviceDescription.DeviceManufacturer + " - " + response.deviceDescription.DeviceName, 
+			"silaDeviceClassId": response.deviceDescription.SiLADeviceClass, 
+			"silaDeviceClassVersion": response.deviceDescription.SiLADeviceClassVersion}		
+			//TODO: Add all the info from the wsdl file - serial number, etc.
+			});
+		  		
+		}
+		else
+		{
+	    		// show a nice error message
+	    		console.log("error soap");
+			Devices.update({ _id: newId }, { "$set": {"status":"Unable to Connect", 
+				"name": "UNKNOWN", 
+				"silaDeviceClassId": "UNKNOWN", 
+				"silaDeviceClassVersion": "UNKNOWN"}
+			});
+
+		}
+	});
+
+////
+
+*/
+
 		}
 
 		function errorAction(msg) {
@@ -72,7 +112,7 @@ Template.DevicesInsertInsertForm.events({
 
 			},
 			function(values) {
-				
+//				newUrl = values.url;				
 
 				newId = Devices.insert(values, function(e) { if(e) errorAction(e.message); else submitAction(); });
 			}
