@@ -34,6 +34,10 @@ MethodCommands.before.remove(function(userId, doc) {
 });
 
 MethodCommands.after.insert(function(userId, doc) {
+
+var requestId = createRequestId(doc._id);
+
+MethodCommands.update({ _id: doc._id }, { "$set": {"requestId":requestId}});
 	
 });
 
