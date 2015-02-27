@@ -30,7 +30,7 @@ Methods.before.update(function(userId, doc, fieldNames, modifier, options) {
 });
 
 Methods.before.remove(function(userId, doc) {
-	
+	//TODO: Remove the method_commands of this method, check possible running commands
 });
 
 Methods.after.insert(function(userId, doc) {
@@ -42,5 +42,5 @@ Methods.after.update(function(userId, doc, fieldNames, modifier, options) {
 });
 
 Methods.after.remove(function(userId, doc) {
-	
+
 });
