@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions targetNamespace="http://sila-standard.org" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://sila-standard.org" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/">
+
+  <wsdl:types>
+
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sila-standard.org">
+
+      <s:element name="ResponseEvent">
+
+        <s:complexType>
+
+          <s:sequence>
+
+            <s:element maxOccurs="1" minOccurs="1" name="requestId" type="s:int"/>
+
+            <s:element maxOccurs="1" minOccurs="0" name="returnValue" type="tns:SiLAReturnValue"/>
+
+            <s:element maxOccurs="1" minOccurs="0" name="responseData" type="s:string"/>
+
+          </s:sequence>
+
+        </s:complexType>
+
+      </s:element>
+
+      <s:complexType name="SiLAReturnValue">
+
+        <s:sequence>
+
+          <s:element maxOccurs="1" minOccurs="1" name="returnCode" type="s:int"/>
+
+          <s:element maxOccurs="1" minOccurs="0" name="message" type="s:string"/>
+
+          <s:element maxOccurs="1" minOccurs="0" name="duration" type="s:string"/>
+
+          <s:element maxOccurs="1" minOccurs="1" name="deviceClass" type="s:int"/>
+
+        </s:sequence>
+
+      </s:complexType>
+
+      <s:element name="ResponseEventResponse">
+
+        <s:complexType>
+
+          <s:sequence>
+
+            <s:element maxOccurs="1" minOccurs="0" name="ResponseEventResult" type="tns:SiLAReturnValue"/>
+
+          </s:sequence>
+
+        </s:complexType>
+
+      </s:element>
+
+      <s:element name="DataEvent">
+
+        <s:complexType>
+
+          <s:sequence>
+
+            <s:element maxOccurs="1" minOccurs="1" name="requestId" type="s:int"/>
+
+            <s:element maxOccurs="1" minOccurs="0" name="dataValue" type="s:string"/>
+
+          </s:sequence>
+
+        </s:complexType>
+
+      </s:element>
+
+      <s:element name="DataEventResponse">
+
+        <s:complexType>
+
+          <s:sequence>
+
+            <s:element maxOccurs="1" minOccurs="0" name="DataEventResult" type="tns:SiLAReturnValue"/>
+
+          </s:sequence>
+
+        </s:complexType>
+
+      </s:element>
+
+      <s:element name="ErrorEvent">
+
+        <s:complexType>
+
+          <s:sequence>
+
+            <s:element maxOccurs="1" minOccurs="1" name="requestId" type="s:int"/>
+
+            <s:element maxOccurs="1" minOccurs="0" name="returnValue" type="tns:SiLAReturnValue"/>
+
+            <s:element maxOccurs="1" minOccurs="0" name="continuationTask" type="s:string"/>
+
+          </s:sequence>
+
+        </s:complexType>
+
+      </s:element>
+
+      <s:element name="ErrorEventResponse">
+
+        <s:complexType>
+
+          <s:sequence>
+
+            <s:element maxOccurs="1" minOccurs="0" name="ErrorEventResult" type="tns:SiLAReturnValue"/>
+
+            <s:element maxOccurs="1" minOccurs="0" name="continuationTask" type="s:string"/>
+
+          </s:sequence>
+
+        </s:complexType>
+
+      </s:element>
+
+      <s:element name="StatusEvent">
+
+        <s:complexType>
+
+          <s:sequence>
+
+            <s:element maxOccurs="1" minOccurs="0" name="deviceId" type="s:string"/>
+
+            <s:element maxOccurs="1" minOccurs="0" name="returnValue" type="tns:SiLAReturnValue"/>
+
+            <s:element maxOccurs="1" minOccurs="0" name="eventDescription" type="s:string"/>
+
+          </s:sequence>
+
+        </s:complexType>
+
+      </s:element>
+
+      <s:element name="StatusEventResponse">
+
+        <s:complexType>
+
+          <s:sequence>
+
+            <s:element maxOccurs="1" minOccurs="0" name="StatusEventResult" type="tns:SiLAReturnValue"/>
+
+          </s:sequence>
+
+        </s:complexType>
+
+      </s:element>
+
+    </s:schema>
+
+  </wsdl:types>
+
+  <wsdl:message name="StatusEventSoapOut">
+
+    <wsdl:part name="parameters" element="tns:StatusEventResponse">
+
+    </wsdl:part>
+
+  </wsdl:message>
+
+  <wsdl:message name="DataEventSoapIn">
+
+    <wsdl:part name="parameters" element="tns:DataEvent">
+
+    </wsdl:part>
+
+  </wsdl:message>
+
+  <wsdl:message name="ResponseEventSoapIn">
+
+    <wsdl:part name="parameters" element="tns:ResponseEvent">
+
+    </wsdl:part>
+
+  </wsdl:message>
+
+  <wsdl:message name="StatusEventSoapIn">
+
+    <wsdl:part name="parameters" element="tns:StatusEvent">
+
+    </wsdl:part>
+
+  </wsdl:message>
+
+  <wsdl:message name="ResponseEventSoapOut">
+
+    <wsdl:part name="parameters" element="tns:ResponseEventResponse">
+
+    </wsdl:part>
+
+  </wsdl:message>
+
+  <wsdl:message name="ErrorEventSoapIn">
+
+    <wsdl:part name="parameters" element="tns:ErrorEvent">
+
+    </wsdl:part>
+
+  </wsdl:message>
+
+  <wsdl:message name="ErrorEventSoapOut">
+
+    <wsdl:part name="parameters" element="tns:ErrorEventResponse">
+
+    </wsdl:part>
+
+  </wsdl:message>
+
+  <wsdl:message name="DataEventSoapOut">
+
+    <wsdl:part name="parameters" element="tns:DataEventResponse">
+
+    </wsdl:part>
+
+  </wsdl:message>
+
+  <wsdl:portType name="EventReceiverSoap">
+
+    <wsdl:operation name="ResponseEvent">
+
+<wsdl:documentation><![CDATA[<SiLACommandDescription isCommonCommand="true" estimatedDuration="PT1S"><Summary> This command is used to return the successful completion of an asynchronous command.</Summary><Parameter name="requestId" minValue="1" maxValue="2147483647">This parameter is the unique identification of the asynchronous command, which is now finished.</Parameter><Parameter name="returnValue">The complex type describing all details of the return value as would be for a synchronous call.</Parameter><Parameter name="responseData">The XML document describing additional data.</Parameter></SiLACommandDescription>]]></wsdl:documentation>
+
+      <wsdl:input message="tns:ResponseEventSoapIn">
+
+    </wsdl:input>
+
+      <wsdl:output message="tns:ResponseEventSoapOut">
+
+    </wsdl:output>
+
+    </wsdl:operation>
+
+    <wsdl:operation name="DataEvent">
+
+<wsdl:documentation><![CDATA[<SiLACommandDescription isCommonCommand="true" estimatedDuration="PT1S" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sila.coop/schemata/SoapAnnotation.xsd"><Summary> This command is used to enable the transmisson of data generated during an asynchronous command execution.</Summary><Parameter name="requestId" minValue="1" maxValue="2147483647">This parameter is the unique identification of this command call.</Parameter><Parameter name="dataValue">The description and values of the data transferred.</Parameter></SiLACommandDescription>]]></wsdl:documentation>
+
+      <wsdl:input message="tns:DataEventSoapIn">
+
+    </wsdl:input>
+
+      <wsdl:output message="tns:DataEventSoapOut">
+
+    </wsdl:output>
+
+    </wsdl:operation>
+
+    <wsdl:operation name="ErrorEvent">
+
+<wsdl:documentation><![CDATA[<SiLACommandDescription isCommonCommand="true" estimatedDuration="PT1S" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sila.coop/schemata/SoapAnnotation.xsd"><Summary> This event reports the occurrence of a recoverable error and sends the required information for intelligent error handling (list of possible actions for error recovery).</Summary><Parameter name="requestId" minValue="1" maxValue="2147483647">This parameter is the unique identification of the command that generated the error.</Parameter><Parameter name="returnValue">The complex type describing all details of the return value.</Parameter><Parameter name="continuationTask">The complex type describing the possible recovery actions.</Parameter></SiLACommandDescription>]]></wsdl:documentation>
+
+      <wsdl:input message="tns:ErrorEventSoapIn">
+
+    </wsdl:input>
+
+      <wsdl:output message="tns:ErrorEventSoapOut">
+
+    </wsdl:output>
+
+    </wsdl:operation>
+
+    <wsdl:operation name="StatusEvent">
+
+<wsdl:documentation><![CDATA[<SiLACommandDescription isCommonCommand="true" estimatedDuration="PT1S" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sila.coop/schemata/SoapAnnotation.xsd"><Summary> This command is used to report device events.</Summary><Parameter name="deviceId">The identification the device returns to identify itself at the PMS.</Parameter><Parameter name="returnValue">The complex type describing all details of the return value.</Parameter><Parameter name="eventDescription">The complex type describing the event.</Parameter></SiLACommandDescription>]]></wsdl:documentation>
+
+      <wsdl:input message="tns:StatusEventSoapIn">
+
+    </wsdl:input>
+
+      <wsdl:output message="tns:StatusEventSoapOut">
+
+    </wsdl:output>
+
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+  <wsdl:binding name="EventReceiverSoap" type="tns:EventReceiverSoap">
+
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <wsdl:operation name="ResponseEvent">
+
+      <soap:operation soapAction="http://sila-standard.org/ResponseEvent" style="document"/>
+
+      <wsdl:input>
+
+        <soap:body use="literal"/>
+
+      </wsdl:input>
+
+      <wsdl:output>
+
+        <soap:body use="literal"/>
+
+      </wsdl:output>
+
+    </wsdl:operation>
+
+    <wsdl:operation name="DataEvent">
+
+      <soap:operation soapAction="http://sila-standard.org/DataEvent" style="document"/>
+
+      <wsdl:input>
+
+        <soap:body use="literal"/>
+
+      </wsdl:input>
+
+      <wsdl:output>
+
+        <soap:body use="literal"/>
+
+      </wsdl:output>
+
+    </wsdl:operation>
+
+    <wsdl:operation name="ErrorEvent">
+
+      <soap:operation soapAction="http://sila-standard.org/ErrorEvent" style="document"/>
+
+      <wsdl:input>
+
+        <soap:body use="literal"/>
+
+      </wsdl:input>
+
+      <wsdl:output>
+
+        <soap:body use="literal"/>
+
+      </wsdl:output>
+
+    </wsdl:operation>
+
+    <wsdl:operation name="StatusEvent">
+
+      <soap:operation soapAction="http://sila-standard.org/StatusEvent" style="document"/>
+
+      <wsdl:input>
+
+        <soap:body use="literal"/>
+
+      </wsdl:input>
+
+      <wsdl:output>
+
+        <soap:body use="literal"/>
+
+      </wsdl:output>
+
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <wsdl:service name="EventReceiver">
+
+    <wsdl:port name="EventReceiverSoap" binding="tns:EventReceiverSoap">
+
+      <soap:address location="http://0.0.0.0:8080/pms"/>
+
+    </wsdl:port>
+
+  </wsdl:service>
+
+</wsdl:definitions>
