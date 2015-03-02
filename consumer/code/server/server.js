@@ -108,74 +108,6 @@ if(!CommonCommandSet.find().count()) {
 	CommonCommandSet.insert({'deviceClassVersion':'0.97','name':'WriteCodeSeries ','parameters':'','returnValues':'','0':'','1':'','2':'','3':'','4':'','5':'','6':'','7':'','8':'','9':'','10':'','11':'','12':'','13':'','14':'','15':'','16':'','17':'','18':'','19':'','20':'','21':'','22':'','23':'','24':'','25':'','26':'','27':'','28':'','29':'','30':'','31':'','901':'','902':'','903':'','1000':''});
 }
 
-
-////////////////////////////////////
-//initialize the SiLA Event Receiver
-
-var http = Meteor.npmRequire('http');
-var soap = Meteor.npmRequire('soap');	  
-
-var fileName=  '../../../../../public/SiLA_example_EventReceiver.xml'; // TODO: change this when deployment 
-var ip = '0.0.0.0'; // // TODO: change this when deployment. Change to fixed ip if necesary (ex. for actelion sila converter -in 192.168.137.10- change this var to 192.168.137.11)
-var port = 8080;
-var path = '/pms'; // path to web service
-
-
-var myService = {
-      EventReceiver: { //Service name
-          EventReceiverSoap: { // Port name
-              ResponseEvent: function(args) {// Operation name
-                var currentdate = new Date(); console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
-                console.log(args);
-                  return {
-                      ResponseEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
-                  };
-              },
-		DataEvent: function(args) {// Operation name
-		  var currentdate = new Date();  console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
-      console.log(args);
-                  return {
-                      DataEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
-                  };
-              },
-		ErrorEvent: function(args) {// Operation name
-		  console.log(args);var currentdate = new Date(); console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
-                  return {
-                      ErrorEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
-                  };
-              },
-		StatusEvent: function(args) {// Operation name
-		  var currentdate = new Date(); console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
-      console.log(args);
-                  return {
-                      StatusEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
-                  };
-              }          
-          }
-      }
-  }
-
-  
-/*
-var xml = Meteor.npmRequire('fs').readFileSync(fileName, 'utf8');
-var server = http.createServer(function(request,response) {
-          response.end("404: Not Found: "+request.url);
-soap.listen(this, path, myService, xml);
-      });
-
-  server.listen(port, ip);
-
-
-
-console.log('SiLA event reciever listening at: http://' + ip + ":" + port);
-
-
-*/
-
-
-////////////////
-
-
 });
 
 Meteor.methods({
@@ -188,24 +120,24 @@ Meteor.methods({
   			setTimeout(function() {
 			soap.createClient(url, function(err, client) {
 				if(!err){
-					if(operation == "GetDeviceIdentification"){
-			      			client.GetDeviceIdentification(args, function(err, soapResult) {
-							callback(null, soapResult);		
-			     			});
-					}
-					else{callback(err);}
+		      			client[operation](args, function(err, soapResult) {
+						if(!err){
+							console.log("connectDeviceSoap " + JSON.stringify(soapResult, null, 4));
+							callback(null, soapResult);
+							console.log("connectDeviceSoap END ===" );
+						}else{callback(err);}		
+		     			});
 				}else{callback(err);}
 			});
-  			}, 1500);//delay for simulation - see the "Connecting..." message //TODO: Delete in production
+  			}, 000);//delay for simulation - see the "Connecting..." message //TODO: Delete in production
 		}
 
-		//wrapping async for Meteor (works sync only)
+		//wrapping async for Meteor (that works sync only)
 		var wrappedDelayedSoapRequest = Async.wrap(delayedSoapRequest);
 
     		var response = wrappedDelayedSoapRequest();
     		return response;
   	},
-
 	"createUserAccount": function(options) {
 		if(!Users.isAdmin(Meteor.userId())) {
 			throw new Meteor.Error(403, "Access denied.");
