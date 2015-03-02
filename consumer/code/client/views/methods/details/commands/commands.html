@@ -13,6 +13,13 @@
 <template name="MethodsDetailsCommandsView">
 	<div id="dataview" class="">
 		<form id="dataview-controls" class="form-inline">
+			<div id="dataview-controls-run" class="form-group">
+				<button type="submit" id="dataview-run-button" class="btn btn-success">
+					<span class="fa fa-play">
+					</span>
+					Run Method
+				</button>
+			</div>
 			<div id="dataview-controls-insert" class="form-group">
 				<button type="submit" id="dataview-insert-button" class="btn btn-success">
 					<span class="fa fa-plus">
@@ -93,6 +100,9 @@
 		<thead id="dataview-table-header">
 			<tr id="dataview-table-header-row">
 				<th class="th-sortable" data-sort="commandName">
+					Request ID
+				</th>
+				<th class="th-sortable" data-sort="commandName">
 					CommandName
 				</th>
 				<th class="th-sortable" data-sort="command_parameters">
@@ -117,6 +127,9 @@
 
 <template name="MethodsDetailsCommandsViewTableItems">
 	<tr id="dataview-table-items-row">
+		<td>
+			{{requestId}}
+		</td>
 		<td>
 			{{commandName}}
 		</td>
