@@ -31,5 +31,5 @@ this.createRequestId = function(string){
 	}
 	if(hash<0)
 	    hash *= -1; //return only positives integers
-	return hash;
+	return hash.toString();
 };
