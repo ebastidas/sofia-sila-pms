@@ -20,6 +20,10 @@ Devices.before.insert(function(userId, doc) {
 	if(!doc.ownerId) doc.ownerId = userId;
 if(!doc.status) doc.status =  'UNKNOWN';
 
+				if(!doc.name) doc.name = 'UNKNOWN'; 
+				if(!doc.silaDeviceClassId) doc.silaDeviceClassId = 'UNKNOWN'; 
+				if(!doc.silaDeviceClassVersion) doc.silaDeviceClassVersion = 'UNKNOWN';
+
 });
 
 Devices.before.update(function(userId, doc, fieldNames, modifier, options) {
@@ -31,7 +35,7 @@ Devices.before.update(function(userId, doc, fieldNames, modifier, options) {
 });
 
 Devices.before.remove(function(userId, doc) {
-	
+	//TODO: Check running (or non running) methods. Alert this to the user before delete a device.
 });
 
 Devices.after.insert(function(userId, doc) {
@@ -44,6 +48,7 @@ Devices.after.insert(function(userId, doc) {
 	Meteor.call('connectDeviceSoap', url, command, args, function (error,response) {
   		// identify the error
   		if (!error) {
+			//TODO: check if device is locked and can't get the information. This returns a error response from the device that the command GetDeviceIdentification can't execute because it's locked to another pms
 			Devices.update({ _id: doc._id }, { "$set": {"status":"Connected", 
 			"name": response.deviceDescription.DeviceManufacturer + " - " + response.deviceDescription.DeviceName, 
 			"silaDeviceClassId": response.deviceDescription.SiLADeviceClass, 
