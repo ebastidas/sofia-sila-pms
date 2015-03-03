@@ -70,6 +70,56 @@ var MethodsDetailsCommandsViewExport = function(cursor, fileType) {
 	downloadLocalResource(str, filename, "application/octet-stream");
 };
 
+var runCommand = function(commandId, url, commandName, args){
+
+	//MethodCommands.update({ _id: commandId }, { "$set": {"status":"Running..."}});
+console.log("---3.runCommand.commandId--" + commandId);
+
+	Meteor.call('connectDeviceSoap', url, commandName, args, function (error,response) {
+  		// identify the error
+  		if (!error) {
+			//TODO: check if device is locked and can't get the information.
+			var newStatus, newStatusMessage;
+			//console.log("wildcard "+response.[*].returnCode);
+				if(commandName == "GetStatus") {
+				    	console.log("---4.GetStatus--" + commandId);
+				    	console.log(response);
+						newStatus = response.GetStatusResult.returnCode; 
+						newStatusMessage = response.GetStatusResult.message;
+				}
+				else if(commandName ==  "GetDeviceIdentification"){
+						console.log("---4.GetDeviceIdentification--" + commandId);
+				    	console.log(response);
+						newStatus = response.GetDeviceIdentificationResult.returnCode; 
+						newStatusMessage = response.GetDeviceIdentificationResult.message;
+						console.log("--GetDeviceIdentification--");
+				}
+				else if(commandName ==  "Reset"){
+					console.log("---4.Reset--" + commandId);
+					console.log(response);
+					newStatus = response.ResetResult.returnCode ;
+					newStatusMessage = response.ResetResult.message;					
+				}
+				else if(commandName ==  "Shake"){
+					console.log("---4.Shake--" + commandId);
+					console.log(response);
+					newStatus = response.ShakeResult.returnCode ;
+					newStatusMessage = response.ShakeResult.message;					
+				}
+			    //default: //TODO: all the async commands go here (get dynamic response): response.[commandName + "Result"].returnCode
+							
+			MethodCommands.update({ _id: commandId }, { "$set": {"status": newStatus, "statusMessage": newStatusMessage}});
+		}
+		else
+		{
+	    		// show a nice error message
+	    		console.log("error soap");
+			MethodCommands.update({ _id: commandId }, { "$set": {"status":"404", "statusMessage": "connection error"}});
+		}
+	});
+
+}
+
 
 var MethodsDetailsCommandsRun = function(cursor, methodId) {
 
@@ -84,47 +134,94 @@ var MethodsDetailsCommandsRun = function(cursor, methodId) {
 
 	var meth = Methods.findOne({_id : methodId});
 	var dev = Devices.findOne({_id : meth.deviceId});
-	var url = dev.url;
 
-	_.each(commands, function(comm){
+	_.each(commands, function(c){
+		//Add to queue here. TODO: Upgrade and use a job-queue manager: https://github.com/vsivsi/meteor-job-collection/
+		MethodCommands.update({ _id: c._id }, { "$set": {"status":"Queued"}});
+	});
 
-		MethodCommands.update({ _id: comm._id }, { "$set": {"status":"running..."}});		
 
-		var command = comm.commandName;
-		if(comm.command_parameters){
-			var argsString = '{"requestId" : "' + comm.requestId + '", ' + comm.command_parameters + '}'; // TODO: add dynamic parameters for all the commands
+	var firstCommandFlag = true;
+	var previousCommandId; 
+	var previousCommandName; //BUG. TODO: delete. This is a Workaround for the bug in HSR bug by not allowing to call multiple commands in parallell (try calling getStatus at the same time sequentially). This line gives some interval of time so the simulator can process. Delete this workaround for a better simulator or a device that allows parallel command calls/execution.
+
+	_.each(commands, function(c){	
+
+		if(c.command_parameters){//for commands with parameters
+			var argsString = '{"requestId" : "' + c.requestId + '", ' + c.command_parameters + '}'; // TODO: add dynamic parameters for all the commands
 		
-		}else{
-			var argsString = '{"requestId" : "' + comm.requestId + '"}'; // TODO: add dynamic parameters for all the commands				
+		}else{//for commands without parameters
+			var argsString = '{"requestId" : "' + c.requestId + '"}'; // TODO: add dynamic parameters for all the commands				
 		}
 		
 		var args = JSON.parse(argsString);
 
-		Meteor.call('connectDeviceSoap', url, command, args, function (error,response) {
-	  		// identify the error
-	  		if (!error) {
-				//TODO: check if device is locked and can't get the information.
-				var newStatus;
-				switch(command) {
-				    case "GetStatus":
-					newStatus = "(" + response.GetStatusResult.returnCode + ") " + (response.GetStatusResult.returnCode==1?"success":response.GetStatusResult.message);
-					break;
-				    case "GetDeviceIdentification":
-					
-					break;
-				    default: //TODO: all the async commands go here (get dynamic response)
-					newStatus = "(" + response.ResetResult.returnCode + ") " + response.ResetResult.message;					
-				}				
-				MethodCommands.update({ _id: comm._id }, { "$set": {"status": newStatus}});
-			}
-			else
-			{
-		    		// show a nice error message
-		    		console.log("error soap");
-				MethodCommands.update({ _id: comm._id }, { "$set": {"status":"connection error"}});
-			}
-		});
+
+		if(firstCommandFlag)
+		{
+			//run immediately
+			firstCommandFlag = false;	
+			runCommand(c._id, dev.url, c.commandName, args);
+
+			if(c.commandName == "GetStatus"){ // or getDeviceIdentification
+							previousCommandName = "syncCommand";
+						}
+						else{
+							previousCommandName = "";
+						}
+
+		}
+		else{
+			//Add observeChanges to previous command
+			//Defer the execution of the next command until the previous command has completely finished: code 1 (sync commands), or 3 (async commands)
+
+console.log("---1.each.previousCommandId: ");
+console.log(previousCommandId);
+			var query = MethodCommands.find({_id:previousCommandId});
+console.log("---2.each.query: " + query);
+console.log(query);
+
+			var handle = query.observeChanges({
+			  changed: function (id, method_command) {
+			    if(method_command.status){
+				    console.log("---observeChanges.changed.status: " + method_command.status + " changed in id " + id);
+					if (method_command.status == 1 || method_command.status == 3 ){ //&& status is 1 (sync finished) || 3 (async finished)
+						handle.stop();
+
+						if(previousCommandName == "syncCommand" ){
+							setTimeout(function () {runCommand(c._id, dev.url, c.commandName, args);}, 1300)// BUG. TODO:delete
+						}
+						else{
+							runCommand(c._id, dev.url, c.commandName, args);
+						}
+
+						if(c.commandName == "GetStatus" || c.commandName == "GetDeviceIdentification"){ // or other sync command. BUG. TODO:delete
+							previousCommandName = "syncCommand";
+						}
+						else{
+							previousCommandName = "";
+						}
+
+						
+
+					}
+			    }
+
+			  }
+			});
+			
+			// After five seconds, stop keeping the count.
+			//setTimeout(function () {handle.stop();}, 15000);
+		}
+
+		previousCommandId = c._id;
+	
+
 	});
+
+	Methods.update({ _id: methodId }, { "$set": {"date": new Date()}});
+	Methods.update({ _id: methodId }, { "$set": {"status": "Execution complete"}});
+
 };
 
 
@@ -215,6 +312,7 @@ Template.MethodsDetailsCommandsView.events({
 
 	"click #dataview-run-button": function(e, t) {
 		e.preventDefault();
+		Methods.update({ _id: this.params.methodId }, { "$set": {"status":"Running"}});
 		MethodsDetailsCommandsRun(this.method_commands, this.params.methodId);
 		//Router.go("methods.details.insert", {methodId: this.params.methodId});
 	}
