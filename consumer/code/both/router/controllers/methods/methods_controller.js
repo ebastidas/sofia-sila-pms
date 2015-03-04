@@ -36,7 +36,7 @@ this.MethodsController = RouteController.extend({
 		return {
 			params: this.params || {},
 			devices: Devices.find({}, {}),
-			method_list: Methods.find({}, {transform:function(doc) { var device = Devices.findOne({_id: doc.deviceId }); if(device) doc.deviceName = device.name; return doc; },sort:{methodNumber:-1}})
+			method_list: Methods.find({}, {transform:function(doc) { var device = Devices.findOne({_id: doc.deviceId }); if(device) doc.deviceName = device.name; return doc; },sort:{createdAt:1}})
 		};
 		/*DATA_FUNCTION*/
 	},
