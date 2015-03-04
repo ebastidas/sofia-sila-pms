@@ -31,7 +31,7 @@ var MethodsDetailsCommandsViewItems = function(cursor) {
 	} else {
 		searchString = searchString.replace(".", "\\.");
 		var regEx = new RegExp(searchString, "i");
-		var searchFields = ["commandId", "requestId", "commandName", "command_parameters", "status"];
+		var searchFields = ["commandId", "requestId", "commandName", "command_parameters", "status", "statusMessage"];
 		filtered = _.filter(raw, function(item) {
 			var match = false;
 			_.each(searchFields, function(field) {
@@ -61,7 +61,7 @@ var MethodsDetailsCommandsViewItems = function(cursor) {
 
 var MethodsDetailsCommandsViewExport = function(cursor, fileType) {
 	var data = MethodsDetailsCommandsViewItems(cursor);
-	var exportFields = ["commandId", "requestId", "commandName", "command_parameters", "status"];
+	var exportFields = ["commandId", "requestId", "commandName", "command_parameters", "status", "statusMessage"];
 
 	var str = convertArrayOfObjects(data, exportFields, fileType);
 
@@ -72,42 +72,25 @@ var MethodsDetailsCommandsViewExport = function(cursor, fileType) {
 
 var runCommand = function(commandId, url, commandName, args){
 
-	//MethodCommands.update({ _id: commandId }, { "$set": {"status":"Running..."}});
-console.log("---3.runCommand.commandId--" + commandId);
+	//console.log("---3.runCommand.commandId--" + commandId);
 
 	Meteor.call('connectDeviceSoap', url, commandName, args, function (error,response) {
   		// identify the error
   		if (!error) {
 			//TODO: check if device is locked and can't get the information.
-			var newStatus, newStatusMessage;
-			//console.log("wildcard "+response.[*].returnCode);
-				if(commandName == "GetStatus") {
-				    	console.log("---4.GetStatus--" + commandId);
-				    	console.log(response);
-						newStatus = response.GetStatusResult.returnCode; 
-						newStatusMessage = response.GetStatusResult.message;
-				}
-				else if(commandName ==  "GetDeviceIdentification"){
-						console.log("---4.GetDeviceIdentification--" + commandId);
-				    	console.log(response);
-						newStatus = response.GetDeviceIdentificationResult.returnCode; 
-						newStatusMessage = response.GetDeviceIdentificationResult.message;
-						console.log("--GetDeviceIdentification--");
-				}
-				else if(commandName ==  "Reset"){
-					console.log("---4.Reset--" + commandId);
-					console.log(response);
-					newStatus = response.ResetResult.returnCode ;
-					newStatusMessage = response.ResetResult.message;					
-				}
-				else if(commandName ==  "Shake"){
-					console.log("---4.Shake--" + commandId);
-					console.log(response);
-					newStatus = response.ShakeResult.returnCode ;
-					newStatusMessage = response.ShakeResult.message;					
-				}
-			    //default: //TODO: all the async commands go here (get dynamic response): response.[commandName + "Result"].returnCode
-							
+			var newStatus="-", newStatusMessage="-";
+			
+	    	//console.log(response[commandName + "Result"].returnCode);
+			newStatus = response[commandName + "Result"].returnCode; 
+			newStatusMessage = response[commandName + "Result"].message;
+
+			if (newStatus==1) {
+				newStatusMessage = "success"; // workaround empty message in the simulator
+			}
+			if (newStatus==2) {
+				newStatusMessage += " (waiting/running...)"; // workaround for not knowing if the command is running or waiting in the queue. TODO: check via getStatus periodically
+			}
+			
 			MethodCommands.update({ _id: commandId }, { "$set": {"status": newStatus, "statusMessage": newStatusMessage}});
 		}
 		else
@@ -124,7 +107,6 @@ console.log("---3.runCommand.commandId--" + commandId);
 var MethodsDetailsCommandsRun = function(cursor, methodId) {
 
 	var commands = MethodsDetailsCommandsViewItems(cursor);
-	//console.log(commands[0]);
 
 	//TODO:
 	//1. queue all the commands -> set Status to 'queued' to all commands. Issue: Find better solution for async commands, this will stop the client until all the commands finish 
@@ -137,7 +119,7 @@ var MethodsDetailsCommandsRun = function(cursor, methodId) {
 
 	_.each(commands, function(c){
 		//Add to queue here. TODO: Upgrade and use a job-queue manager: https://github.com/vsivsi/meteor-job-collection/
-		MethodCommands.update({ _id: c._id }, { "$set": {"status":"Queued"}});
+		MethodCommands.update({ _id: c._id }, { "$set": {"status": "-", "statusMessage":"Queued"}});
 	});
 
 
@@ -163,33 +145,33 @@ var MethodsDetailsCommandsRun = function(cursor, methodId) {
 			firstCommandFlag = false;	
 			runCommand(c._id, dev.url, c.commandName, args);
 
-			if(c.commandName == "GetStatus"){ // or getDeviceIdentification
-							previousCommandName = "syncCommand";
-						}
-						else{
-							previousCommandName = "";
-						}
+			if(c.commandName == "GetStatus" || c.commandName == "GetDeviceIdentification"){
+				previousCommandName = "syncCommand";
+			}
+			else{
+				previousCommandName = "";
+			}
 
 		}
 		else{
 			//Add observeChanges to previous command
 			//Defer the execution of the next command until the previous command has completely finished: code 1 (sync commands), or 3 (async commands)
 
-console.log("---1.each.previousCommandId: ");
-console.log(previousCommandId);
+//console.log("---1.each.previousCommandId: ");
+//console.log(previousCommandId);
 			var query = MethodCommands.find({_id:previousCommandId});
-console.log("---2.each.query: " + query);
-console.log(query);
+//console.log("---2.each.query: " + query);
+//console.log(query);
 
 			var handle = query.observeChanges({
 			  changed: function (id, method_command) {
-			    if(method_command.status){
-				    console.log("---observeChanges.changed.status: " + method_command.status + " changed in id " + id);
+			    if(method_command.status){				   
+//console.log("---observeChanges.changed.status: " + method_command.status + " changed in id " + id);
 					if (method_command.status == 1 || method_command.status == 3 ){ //&& status is 1 (sync finished) || 3 (async finished)
 						handle.stop();
 
 						if(previousCommandName == "syncCommand" ){
-							setTimeout(function () {runCommand(c._id, dev.url, c.commandName, args);}, 1300)// BUG. TODO:delete
+							setTimeout(function () {runCommand(c._id, dev.url, c.commandName, args);}, 1300);// BUG. TODO:delete
 						}
 						else{
 							runCommand(c._id, dev.url, c.commandName, args);
@@ -210,8 +192,8 @@ console.log(query);
 			  }
 			});
 			
-			// After five seconds, stop keeping the count.
-			//setTimeout(function () {handle.stop();}, 15000);
+			// Stop listening after some time. //TODO: check this for long executions of methods
+			//setTimeout(function () {handle.stop();}, 86400000);
 		}
 
 		previousCommandId = c._id;
