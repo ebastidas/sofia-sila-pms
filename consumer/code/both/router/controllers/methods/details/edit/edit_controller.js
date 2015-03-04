@@ -35,12 +35,16 @@ this.MethodsDetailsEditController = RouteController.extend({
 
 	data: function() {
 		
+		var method = Methods.findOne({_id:this.params.methodId},{}); 
+		var device = Devices.findOne({_id: method.deviceId});  
+		var qry = '{"' + device.silaDeviceClassId + '": { "$in": [ "M", "R", "O" ] } }';
+		var qryJSON = JSON.parse(qry);
 
 		return {
 			params: this.params || {},
 			devices: Devices.find({}, {}),
 			method_details: Methods.findOne({_id:this.params.methodId}, {transform:function(doc) { var device = Devices.findOne({_id: doc.deviceId }); if(device) doc.deviceName = device.name; return doc; }}),
-			common_command_set: CommonCommandSet.find({}, {}),
+			common_command_set: CommonCommandSet.find(qryJSON, {}),
 			method_command: MethodCommands.findOne({_id:this.params.commandId}, {})
 		};
 		/*DATA_FUNCTION*/

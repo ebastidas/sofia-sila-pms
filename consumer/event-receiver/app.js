@@ -1,3 +1,12 @@
+  
+  // Connection URL
+  var url = 'mongodb://127.0.0.1:3001/meteor'; //DEPLOY: get relative IP
+
+
+  //////browser debugger in http://0.0.0.0:50500
+  //var nomo = require('node-monkey').start({host:'0.0.0.0', port: 8081});
+  ///////////
+
   var MongoClient = require('mongodb').MongoClient
   , assert = require('assert');
 
@@ -9,26 +18,18 @@
   collection.update({ "requestId" : args.requestId.toString() }
     , { $set: { "status" : newStatus, "statusMessage": newStatusMessage } }, function(err, result) {
       assert.equal(err, null);
-      assert.equal(1, result.result.n);
+      //assert.equal(1, result.result.n);
       console.log("Updated the command " + args.requestId.toString());
       callback(result);
     });  
   }
 
-  // Connection URL
-  var url = 'mongodb://127.0.0.1:3001/meteor'; //TODO: get relative IP
-
-
-  //////browser debugger in http://0.0.0.0:50500
-  //var nomo = require('node-monkey').start({host:'0.0.0.0', port: 8081});
-  ///////////
-
   var http = require('http');
   var soap = require('soap');
 
   var fileName= 'SiLA_example_EventReceiver.xml';
-  var ip = '0.0.0.0'; // change to fixed ip if necesary (192.168.137.11) and also in the wsdl (xml) file
-  var port = 8082;
+  var ip = '0.0.0.0'; // DEPLOY: change to fixed ip if necesary (192.168.137.11) and also in the wsdl (xml) file
+  var port = 8082; // DEPLOY: check if port is free
   var path = '/pms'; // path to web service
 
   var myService = {
@@ -45,30 +46,34 @@
             db.close();
           });
         });
-        return {
+        var result = {
           ResponseEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
         };
+        return result;
       },
       DataEvent: function(args) {// Operation name
         var currentdate = new Date();  console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
         console.log(args);
         //TODO: update db
-        return {
+        var result = {
           DataEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
         };
+        return result;
       },
       ErrorEvent: function(args) {// Operation name
         console.log(args);var currentdate = new Date(); console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
-        return {
+        var result = {
           ErrorEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
         };
+        return result;
       },
       StatusEvent: function(args) {// Operation name
         var currentdate = new Date(); console.log("===Log Time - " + (currentdate.getHours()<10?'0':'') + currentdate.getHours() + ":" + (currentdate.getMinutes()<10?'0':'') + currentdate.getMinutes() + ":" + (currentdate.getSeconds()<10?'0':'') + currentdate.getSeconds() + "===");
         console.log(args);
-        return {
+        var result = {
           StatusEventResult: { returnCode: 1, message: 'default message... TODO', duration: 'PT1S', deviceClass: 0 }
         };
+        return result;
       }          
     }
   }
