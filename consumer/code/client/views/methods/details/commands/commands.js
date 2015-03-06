@@ -117,17 +117,12 @@ var MethodsDetailsCommandsRun = function(cursor, methodId) {
 	var meth = Methods.findOne({_id : methodId});
 	var dev = Devices.findOne({_id : meth.deviceId});
 
-	_.each(commands, function(c){
-		//Add to queue here. TODO: Upgrade and use a job-queue manager: https://github.com/vsivsi/meteor-job-collection/
-		MethodCommands.update({ _id: c._id }, { "$set": {"status": "-", "statusMessage":"Queued"}});
-	});
-
-
 	var firstCommandFlag = true;
 	var previousCommandId; 
-	var previousCommandName; //BUG. TODO: delete. This is a Workaround for the bug in HSR bug by not allowing to call multiple commands in parallell (try calling getStatus at the same time sequentially). This line gives some interval of time so the simulator can process. Delete this workaround for a better simulator or a device that allows parallel command calls/execution.
+	var previousCommandName; //BUG. TODO: delete. This is a Workaround for the bug in HSR bug by not allowing to call multiple sync (getStatus) commands in parallell (try calling getStatus at the same time sequentially to reproduce the error). This line gives some interval of time so the simulator can process. Delete this workaround for a better simulator or a device that allows parallel command calls/execution.
 
 	_.each(commands, function(c){	
+		MethodCommands.update({ _id: c._id }, { "$set": {"status": "-", "statusMessage":"Queued"}});
 
 		if(c.command_parameters){//for commands with parameters
 			var argsString = '{"requestId" : "' + c.requestId + '", ' + c.command_parameters + '}'; // TODO: add dynamic parameters for all the commands
@@ -295,8 +290,68 @@ Template.MethodsDetailsCommandsView.events({
 	"click #dataview-run-button": function(e, t) {
 		e.preventDefault();
 		Methods.update({ _id: this.params.methodId }, { "$set": {"status":"Running"}});
+
+
+
+/*
+
+	var myJobs = JobCollection('myJobQueue1');
+  	Meteor.subscribe('allJobs1');
+
+  // Because of the server settings, the code below will
+  // only work if the client is authenticated.
+  // On the server, all of it would run unconditionally.
+
+  // Create a job:
+  var job = myJobs.createJob('sendEmail', // type of job
+    // Job data that you define, including anything the job
+    // needs to complete. May contain links to files, etc...
+    {
+      address: 'bozo@clowns.com',
+      subject: 'Critical rainbow hair shortage',
+      message: 'LOL; JK, KThxBye.'
+    }
+  );
+
+console.log(job);
+
+  // Set some properties of the job and then submit it
+  job.save();               // Commit it to the server
+
+
+
+
+var workers = Job.processJobs('myJobQueue1', 'sendEmail',
+      function (job, cb) {
+        // This will only be called if a
+        // 'sendEmail' job is obtained
+        var email = job.data; // Only one email per job
+        sendEmail(email.address, email.subject, email.message,
+          function(err) {
+            if (err) {
+            	console.log("job error");
+              job.log("Sending failed with error" + err,
+                {level: 'warning'});
+              job.fail("" + err);
+            } else {
+            	console.log("job done");
+              job.done();
+            }
+            // Be sure to invoke the callback
+            // when work on this job has finished
+            cb();
+          }
+        );
+      }
+    );
+
+
+*/
+
+//UNCOMMENT NEXT LINE
 		MethodsDetailsCommandsRun(this.method_commands, this.params.methodId);
 		//Router.go("methods.details.insert", {methodId: this.params.methodId});
+
 	}
 
 	

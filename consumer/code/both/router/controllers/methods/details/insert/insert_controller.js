@@ -44,7 +44,7 @@ this.MethodsDetailsInsertController = RouteController.extend({
 			params: this.params || {},
 			devices: Devices.find({}, {}),
 			method_details: Methods.findOne({_id:this.params.methodId}, {transform:function(doc) { var device = Devices.findOne({_id: doc.deviceId }); if(device) doc.deviceName = device.name; return doc; }}),
-			common_command_set: CommonCommandSet.find(qryJSON, {}),
+			common_command_set: CommonCommandSet.find(qryJSON, {sort: {createdAt:1}}),
 			method_commands_empty: MethodCommands.findOne({_id:null}, {})
 		};
 		/*DATA_FUNCTION*/

@@ -13,7 +13,7 @@
 <template name="MethodsDetailsEditEditForm">
 	<div class="">
 		<h2 id="component-title">
-			Edit command
+			Edit Command
 		</h2>
 		<form id="form" role="form">
 			{{#if errorMessage}}
@@ -29,7 +29,7 @@
 			{{/if}}
 			<div class="form-group text field-command-id">
 				<label for="commandId">
-					CommandId
+					Command
 				</label>
 				<div class="input-div">
 					<select class="form-control" name="commandId" data-type="string" required="required" autofocus="autofocus">
@@ -47,7 +47,7 @@
 			</div>
 			<div class="form-group text field-command_parameters">
 				<label for="command_parameters">
-					Command Parameters
+					Parameters
 				</label>
 				<div class="input-div">
 					<input type="text" name="command_parameters" value="{{method_command.command_parameters}}" class="form-control" data-type="string">

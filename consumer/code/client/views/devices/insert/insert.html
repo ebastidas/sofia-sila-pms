@@ -13,7 +13,7 @@
 <template name="DevicesInsertInsertForm">
 	<div class="">
 		<h2 id="component-title">
-			New device
+			New Device
 		</h2>
 		<form id="form" role="form">
 			{{#if errorMessage}}
@@ -32,7 +32,7 @@
 					URL
 				</label>
 				<div class="input-div">
-					<input type="text" name="url" value="" class="form-control" autofocus="autofocus" data-type="string">
+					<input type="text" name="url" value="" class="form-control" autofocus="autofocus" data-type="string" placeholder="e.g. http://<ip-adresse>/Dispenser?wsdl" required="required">
 					<span id="help-text" class="help-block">
 					</span>
 					<span id="error-text" class="help-block">
