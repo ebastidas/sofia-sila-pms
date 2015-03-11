@@ -82,9 +82,9 @@
   var xml = require('fs').readFileSync(fileName, 'utf8');
   var server = http.createServer(function(request,response) {
     response.end("404: Not Found: "+request.url);
-    soap.listen(this, path, myService, xml);
   });
 
   server.listen(port, ip);
+  soap.listen(server, path, myService, xml);
 
   console.log('SiLA event reciever listening in: http://' + ip + ":" + port);
