@@ -39,43 +39,45 @@ Devices.before.remove(function(userId, doc) {
 });
 
 Devices.after.insert(function(userId, doc) {
-
-
 	var url = doc.url;
 	var command = "GetDeviceIdentification";
-	var args = {"requestId": "1"};
+	var args = {"requestId": "1"}; // TODO: SiLA issue
 
 	Meteor.call('connectDeviceSoap', url, command, args, function (error,response) {
   		// identify the error
   		if (!error) {
 			//TODO: check if device is locked and can't get the information. This returns a error response from the device that the command GetDeviceIdentification can't execute because it's locked to another pms
-			Devices.update({ _id: doc._id }, { "$set": {"status":"Connected", 
-			"name": response.deviceDescription.DeviceManufacturer + " - " + response.deviceDescription.DeviceName, 
-			"silaDeviceClassId": response.deviceDescription.SiLADeviceClass, 
-			"silaDeviceClassVersion": response.deviceDescription.SiLADeviceClassVersion}		
-			//TODO: Add all the info from the wsdl file - serial number, etc.
+			Devices.update({ _id: doc._id }, { "$set": {"status":"Installed", 
+				"name":  response.deviceDescription.DeviceManufacturer + " - " + response.deviceDescription.DeviceName + " (id: " + doc._id + ")",
+				"silaInterfaceVersion" : response.deviceDescription.SiLAInterfaceVersion,
+				"silaDeviceClassId": response.deviceDescription.SiLADeviceClass, 
+				"silaDeviceClassVersion": response.deviceDescription.SiLADeviceClassVersion,
+				"deviceManufacturer" : response.deviceDescription.DeviceManufacturer,
+				"deviceName" : response.deviceDescription.DeviceName,
+				"deviceSerialNumber" : response.deviceDescription.DeviceSerialNumber,
+				"deviceFirmwareVersion" : response.deviceDescription.DeviceFirmwareVersion}		
 			});
-		  		
 		}
 		else
 		{
-	    		// show a nice error message
-	    		console.log("error soap");
+	    	// show a nice error message
+	    	console.log("error soap");
 			Devices.update({ _id: doc._id }, { "$set": {"status":"Unable to Connect", 
-				"name": "UNKNOWN", 
-				"silaDeviceClassId": "UNKNOWN", 
-				"silaDeviceClassVersion": "UNKNOWN"}
+				"name": "-", 
+				"silaInterfaceVersion" : "-",
+				"silaDeviceClassId": "-", 
+				"silaDeviceClassVersion": "-",
+				"deviceManufacturer" : "-",
+				"deviceName" : "-",
+				"deviceSerialNumber" : "-",
+				"deviceFirmwareVersion" : "-"}
 			});
-
 		}
-	});
-
-
-			
+	});	
 });
 
 Devices.after.update(function(userId, doc, fieldNames, modifier, options) {
-	//TODO: Try to connect again after update the URL
+	//TODO: Try to connect again after update ONLY the URL 
 });
 
 Devices.after.remove(function(userId, doc) {

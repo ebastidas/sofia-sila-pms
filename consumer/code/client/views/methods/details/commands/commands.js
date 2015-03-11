@@ -31,7 +31,7 @@ var MethodsDetailsCommandsViewItems = function(cursor) {
 	} else {
 		searchString = searchString.replace(".", "\\.");
 		var regEx = new RegExp(searchString, "i");
-		var searchFields = ["commandId", "requestId", "commandName", "command_parameters", "status", "statusMessage"];
+		var searchFields = ["commandId", "requestId", "commandName", "command_parameters", "status", "modifiedAt", "statusMessage"];
 		filtered = _.filter(raw, function(item) {
 			var match = false;
 			_.each(searchFields, function(field) {
@@ -61,7 +61,7 @@ var MethodsDetailsCommandsViewItems = function(cursor) {
 
 var MethodsDetailsCommandsViewExport = function(cursor, fileType) {
 	var data = MethodsDetailsCommandsViewItems(cursor);
-	var exportFields = ["commandId", "requestId", "commandName", "command_parameters", "status", "statusMessage"];
+	var exportFields = ["commandId", "requestId", "commandName", "command_parameters", "status", "modifiedAt", "statusMessage"];
 
 	var str = convertArrayOfObjects(data, exportFields, fileType);
 
@@ -124,15 +124,24 @@ var MethodsDetailsCommandsRun = function(cursor, methodId) {
 	_.each(commands, function(c){	
 		MethodCommands.update({ _id: c._id }, { "$set": {"status": "-", "statusMessage":"Queued"}});
 
-		if(c.command_parameters){//for commands with parameters
-			var argsString = '{"requestId" : "' + c.requestId + '", ' + c.command_parameters + '}'; // TODO: add dynamic parameters for all the commands
-		
-		}else{//for commands without parameters
-			var argsString = '{"requestId" : "' + c.requestId + '"}'; // TODO: add dynamic parameters for all the commands				
+		if(!c.command_parameters){
+			c.command_parameters = '"requestId":"'+c.requestId+'"';
+		}else{
+			c.command_parameters += ',"requestId":"'+c.requestId+'"';
+		}
+
+		if(c.commandName=="Reset"){
+			c.command_parameters += ',"eventReceiverURI":"'+ EVENT_RECEIVER_URI +'"'; //DEPLOY: change this in different server
+			c.command_parameters += ',"deviceId":"'+dev._id+'","simulationMode":"false"';
+		}
+		if(c.commandName=="LockDevice"){
+			c.command_parameters += ',"eventReceiverURI":"'+Session.get("eventReceiverURI")+'"'; //DEPLOY: change this in different server
+			c.command_parameters += ',"lockId":"123"'; //TODO: check lockId if device has been locked, and add to every device.
 		}
 		
+		var argsString = '{' + c.command_parameters + '}'; // TODO: add dynamic parameters for all the commands
+		
 		var args = JSON.parse(argsString);
-
 
 		if(firstCommandFlag)
 		{
@@ -453,5 +462,7 @@ Template.MethodsDetailsCommandsViewTableItems.events({
 });
 
 Template.MethodsDetailsCommandsViewTableItems.helpers({
-
+	"isCommandAccepted": function() {
+		return (this.status != '-');
+	}
 });

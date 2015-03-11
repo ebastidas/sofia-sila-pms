@@ -101,14 +101,26 @@
 				<th class="th-sortable" data-sort="name">
 					Name
 				</th>
+				<th class="th-sortable" data-sort="owner">
+					Owner
+				</th>
 				<th class="th-sortable" data-sort="url">
 					URL
+				</th>
+				<th class="th-sortable" data-sort="private">
+					Shared?
+				</th>
+				<th class="th-sortable" data-sort="note">
+					Note
 				</th>
 				<th class="th-sortable" data-sort="status">
 					Status
 				</th>
-				<th class="th-sortable" data-sort="note">
-					Note
+				<th>
+					&nbsp;
+				</th>
+				<th>
+					&nbsp;
 				</th>
 				<th>
 					&nbsp;
@@ -133,22 +145,49 @@
 			{{name}}
 		</td>
 		<td>
+			{{ownerId}}
+		</td>
+		<td>
 			{{url}}
 		</td>
 		<td>
-			{{status}}
+			{{#if private}}
+				Private
+			{{else}}
+				Shared
+			{{/if}}
 		</td>
 		<td>
 			{{note}}
 		</td>
+		<td>
+			{{status}}
+		</td>
 		<td class="td-icon">
-			<span id="edit-button" class="fa fa-pencil" title="Edit">
+			<span id="status-button" class="fa fa-refresh" title="Get Status">
 			</span>
 		</td>
 		<td class="td-icon">
-			<span id="delete-button" class="fa fa-trash-o" title="Delete">
+			<span id="lock-button" class="fa fa-unlock" title="Lock">
 			</span>
 		</td>
+		{{#if isOwner}}
+			<td class="td-icon">
+				<span id="edit-button" class="fa fa-pencil" title="Edit">
+				</span>
+			</td>
+			<td class="td-icon">
+				<span id="delete-button" class="fa fa-trash-o" title="Delete">
+				</span>
+			</td>
+		{{else}}
+			<td>
+				&nbsp;
+			</td>
+			<td>
+				&nbsp;
+			</td>
+		{{/if}}
 	</tr>
 </template>
 

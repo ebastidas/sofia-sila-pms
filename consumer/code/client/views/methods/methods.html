@@ -107,6 +107,12 @@
 				<th class="th-sortable" data-sort="deviceName">
 					Device Connected
 				</th>
+				<th class="th-sortable" data-sort="owner">
+					Owner
+				</th>
+				<th class="th-sortable" data-sort="private">
+					Shared?
+				</th>
 				<th>
 					&nbsp;
 				</th>
@@ -135,14 +141,33 @@
 		<td>
 			{{deviceName}}
 		</td>
-		<td class="td-icon">
-			<span id="edit-button" class="fa fa-pencil" title="Edit">
-			</span>
+		<td>
+			{{ownerId}}
 		</td>
-		<td class="td-icon">
-			<span id="delete-button" class="fa fa-trash-o" title="Delete">
-			</span>
+		<td>
+			{{#if private}}
+				Private
+			{{else}}
+				Shared
+			{{/if}}
 		</td>
+		{{#if isOwner}}
+			<td class="td-icon">
+				<span id="edit-button" class="fa fa-pencil" title="Edit">
+				</span>
+			</td>
+			<td class="td-icon">
+				<span id="delete-button" class="fa fa-trash-o" title="Delete">
+				</span>
+			</td>
+		{{else}}
+			<td>
+				&nbsp;
+			</td>
+			<td>
+				&nbsp;
+			</td>
+		{{/if}}
 	</tr>
 </template>
 

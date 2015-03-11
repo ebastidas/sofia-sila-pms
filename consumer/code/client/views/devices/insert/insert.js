@@ -121,10 +121,7 @@ Template.DevicesInsertInsertForm.events({
 		return false;
 	},
 	"click #form-cancel-button": function(e, t) {
-		e.preventDefault();
-
-		
-
+		e.preventDefault();		
 		Router.go("devices", {});
 	},
 	"click #form-close-button": function(e, t) {

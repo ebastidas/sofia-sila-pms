@@ -31,7 +31,7 @@ var DevicesViewItems = function(cursor) {
 	} else {
 		searchString = searchString.replace(".", "\\.");
 		var regEx = new RegExp(searchString, "i");
-		var searchFields = ["silaDeviceClassId", "silaDeviceClassVersion", "name", "url", "status", "note"];
+		var searchFields = ["owner","silaDeviceClassId", "silaDeviceClassVersion", "name", "url", "status", "note"];
 		filtered = _.filter(raw, function(item) {
 			var match = false;
 			_.each(searchFields, function(field) {
@@ -61,7 +61,7 @@ var DevicesViewItems = function(cursor) {
 
 var DevicesViewExport = function(cursor, fileType) {
 	var data = DevicesViewItems(cursor);
-	var exportFields = ["silaDeviceClassId", "silaDeviceClassVersion", "name", "url", "status", "note"];
+	var exportFields = ["owner","silaDeviceClassId", "silaDeviceClassVersion", "name", "url", "status", "note"];
 
 	var str = convertArrayOfObjects(data, exportFields, fileType);
 
@@ -250,9 +250,69 @@ Template.DevicesViewTableItems.events({
 		e.preventDefault();
 		Router.go("devices.edit", {deviceId: this._id});
 		return false;
+	},
+	"click #lock-button": function(e, t) {
+		e.preventDefault();
+		var me = this;
+		bootbox.dialog({
+			message: "Lock? Timeout: [Coming soon...]", //TODO
+			title: "Lock",
+			animate: false,
+			buttons: {
+				success: {
+					label: "Yes",
+					className: "btn-success",
+					callback: function() {
+						//TODO
+						//Devices.remove({ _id: me._id });
+					}
+				},
+				danger: {
+					label: "No",
+					className: "btn-default"
+				}
+			}
+		});
+		return false;
+	},
+	"click #status-button": function(e, t) {
+		e.preventDefault();
+		var me =this;
+		var url = me.url;
+		var command = "GetStatus";
+		var args = {"requestId": "1"}; //TODO: This id should be unique in every request according to SiLA. This has to be fixed by the standard, as it doesn't make sense to create a unique requestId for each getStatus (sync) command.
+
+		Meteor.call('connectDeviceSoap', url, command, args, function (error,response) {
+	  		if (!error) {
+				Devices.update({ _id: me._id }, { "$set": {"status":response.state + " (at: " + response.currentTime + ")"}});	  		
+			}
+			else
+			{
+				Devices.update({ _id: this._id }, { "$set": {"status":"Unable to connect"}});
+				bootbox.dialog({
+					message: "Error: Unable to connect. Check if the device is on.",
+					title: "Error",
+					animate: false,
+					buttons: {
+						success: {
+							label: "OK",
+							className: "btn-success",
+							callback: function() {
+								//TODO
+							}
+						}
+					}
+				});
+	    		console.log("error soap");					
+			}
+		});		
+		return false;
 	}
 });
 
 Template.DevicesViewTableItems.helpers({
-
+	"isOwner": function() {
+		console.log(this);
+		return (this.ownerId === Meteor.userId());
+	}
 });

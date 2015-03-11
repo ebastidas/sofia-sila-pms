@@ -71,6 +71,66 @@
 					</p>
 				</div>
 			</div>
+			<div class="form-group text field-silaInterfaceVersion">
+				<label for="silaInterfaceVersion">
+					SiLA Interface Version
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.silaInterfaceVersion}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-silaDeviceClassVersion">
+				<label for="silaDeviceClassVersion">
+					SiLA Device Class Version
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.silaDeviceClassVersion}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-deviceManufacturer">
+				<label for="deviceManufacturer">
+					Device Manufacturer
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.deviceManufacturer}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-deviceName">
+				<label for="deviceName">
+					Device Name
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.deviceName}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-deviceSerialNumber">
+				<label for="deviceSerialNumber">
+					Device Serial Number
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.deviceSerialNumber}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-deviceFirmwareVersion">
+				<label for="deviceFirmwareVersion">
+					Device Firmware Version
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{device_details.deviceFirmwareVersion}}
+					</p>
+				</div>
+			</div>
 			<div class="form-group text field-note">
 				<label for="note">
 					Note (optional)
@@ -78,6 +138,20 @@
 				<div class="input-div">
 					<p class="form-control-static">
 						{{device_details.note}}
+					</p>
+				</div>
+			</div>
+			<div class="form-group text field-private">
+				<label for="private">
+					Shared?
+				</label>
+				<div class="input-div">
+					<p class="form-control-static">
+						{{#if device_details.private}}
+							Private
+						{{else}}
+							Shared
+						{{/if}}
 					</p>
 				</div>
 			</div>

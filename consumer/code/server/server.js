@@ -134,7 +134,7 @@ Meteor.methods({
 		}
 
 		//wrapping async for Meteor (that works sync only)
-		var wrappedDelayedSoapRequest = Async.wrap(delayedSoapRequest);
+		var wrappedDelayedSoapRequest = Meteor.wrapAsync(delayedSoapRequest);
 
     		var response = wrappedDelayedSoapRequest();
     		return response;

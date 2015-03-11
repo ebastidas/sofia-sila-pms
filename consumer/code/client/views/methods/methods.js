@@ -254,5 +254,8 @@ Template.MethodsViewTableItems.events({
 });
 
 Template.MethodsViewTableItems.helpers({
-
+	"isOwner": function() {
+		console.log(this);
+		return (this.ownerId === Meteor.userId());
+	}
 });

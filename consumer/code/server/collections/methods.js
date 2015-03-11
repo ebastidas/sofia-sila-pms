@@ -18,7 +18,7 @@ Methods.before.insert(function(userId, doc) {
 
 	
 	if(!doc.ownerId) doc.ownerId = userId;
-if(!doc.status) doc.status =  'Not started. Run now [TODO]';
+	if(!doc.status) doc.status =  '-';
 });
 
 Methods.before.update(function(userId, doc, fieldNames, modifier, options) {

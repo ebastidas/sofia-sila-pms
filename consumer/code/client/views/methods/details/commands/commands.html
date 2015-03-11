@@ -99,19 +99,28 @@
 	<table id="dataview-table" class="table table-striped">
 		<thead id="dataview-table-header">
 			<tr id="dataview-table-header-row">
-				<th class="th-sortable" data-sort="commandName">
+				<!--<th class="th-sortable" data-sort="commandName">-->
+				<th>
 					Request ID
 				</th>
-				<th class="th-sortable" data-sort="commandName">
+				<!--<th class="th-sortable" data-sort="commandName">-->
+				<th>
 					Command Name
 				</th>
-				<th class="th-sortable" data-sort="command_parameters">
+				<!--<th class="th-sortable" data-sort="command_parameters">-->
+				<th>
 					Command Parameters
 				</th>
-				<th class="th-sortable" data-sort="status">
+				<!--<th class="th-sortable" data-sort="status">-->
+				<th>
 					Status
 				</th>
-				<th class="th-sortable" data-sort="statusMessage">
+				<!--<th class="th-sortable" data-sort="modifiedAt">-->
+				<th>
+					Accepted At
+				</th>
+				<!--<th class="th-sortable" data-sort="statusMessage">-->
+				<th>
 					Message
 				</th>
 				<th>
@@ -141,6 +150,13 @@
 		</td>
 		<td>
 			{{status}}
+		</td>
+		<td>
+			{{#if isCommandAccepted}}
+				{{modifiedAt}}
+			{{else}}
+				Not Started
+			{{/if}}
 		</td>
 		<td>
 			{{statusMessage}}
