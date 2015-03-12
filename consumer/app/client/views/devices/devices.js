@@ -222,12 +222,11 @@ Template.DevicesViewTableItems.events({
 		Router.go("devices.details", {deviceId: this._id});
 		return false;
 	},
-
 	"click #delete-button": function(e, t) {
 		e.preventDefault();
 		var me = this;
 		bootbox.dialog({
-			message: "Delete? Are you sure?",
+			message: "Delete? Are you sure? Methods attached to this device might not run anymore",
 			title: "Delete",
 			animate: false,
 			buttons: {
@@ -255,7 +254,7 @@ Template.DevicesViewTableItems.events({
 		e.preventDefault();
 		var me = this;
 		bootbox.dialog({
-			message: "Lock? Timeout: [Coming soon...]", //TODO
+			message: "Lock? [Under development...]", //TODO
 			title: "Lock",
 			animate: false,
 			buttons: {
@@ -307,12 +306,18 @@ Template.DevicesViewTableItems.events({
 			}
 		});		
 		return false;
+	},
+	"click #share-button": function(e, t) {
+		e.preventDefault();
+		var me =this;
+		var newValue = !me.private;
+		Devices.update({ _id: this._id }, { "$set": {"private":newValue}});				
+		return false;
 	}
 });
 
 Template.DevicesViewTableItems.helpers({
 	"isOwner": function() {
-		console.log(this);
 		return (this.ownerId === Meteor.userId());
 	}
 });

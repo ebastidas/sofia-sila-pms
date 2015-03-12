@@ -1,4 +1,4 @@
-<template name="DevicesEdit">
+<template name="MethodsEdit">
 	<div class="page-container container" id="content">
 		<div class="row" id="title_row">
 			<div class="col-md-12">
@@ -6,14 +6,14 @@
 				</div>
 			</div>
 		</div>
-		{{> DevicesEditEditForm}}
+		{{> MethodsEditEditForm}}
 	</div>
 </template>
 
-<template name="DevicesEditEditForm">
+<template name="MethodsEditEditForm">
 	<div class="">
 		<h2 id="component-title">
-			Edit device
+			Edit Method
 		</h2>
 		<form id="form" role="form">
 			{{#if errorMessage}}
@@ -27,24 +27,30 @@
 				{{infoMessage}}
 			</div>
 			{{/if}}
-			<div class="form-group text field-url">
-				<label for="url">
-					URL
+			<div class="form-group text field-method-number">
+				<label for="methodNumber">
+					Method number
 				</label>
 				<div class="input-div">
-					<input type="text" name="url" value="{{device.url}}" class="form-control" autofocus="autofocus" data-type="string">
+					<input type="text" name="methodNumber" value="{{method.methodNumber}}" class="form-control" autofocus="autofocus" required="required" data-type="string">
 					<span id="help-text" class="help-block">
 					</span>
 					<span id="error-text" class="help-block">
 					</span>
 				</div>
 			</div>
-			<div class="form-group text field-note">
-				<label for="note">
-					Note (optional)
+			<div class="form-group text field-device-id">
+				<label for="deviceId">
+					Device
 				</label>
 				<div class="input-div">
-					<textarea class="form-control" name="note">{{device.note}}</textarea>
+					<select class="form-control" name="deviceId" data-type="string" required="required">
+						{{#each devices}}
+						<option value="{{_id}}" {{optionIsSelected ../method.deviceId _id}}>
+							{{name}}
+						</option>
+						{{/each}}
+					</select>
 					<span id="help-text" class="help-block">
 					</span>
 					<span id="error-text" class="help-block">
@@ -55,7 +61,7 @@
 				<label for="private">
 					Private
 				</label>
-				{{#if device.private}}
+				{{#if method.private}}
 					<input type="checkbox" name="private" value="" class="form-control" checked>
 				{{else}}
 					<input type="checkbox" name="private" value="" class="form-control">

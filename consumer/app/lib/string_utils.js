@@ -33,3 +33,20 @@ this.createRequestId = function(string){
 	    hash *= -1; //return only positives integers
 	return hash.toString();
 };
+
+this.getparametersAsJSON = function(string){
+	var params, strlen = string.length;
+	if ( strlen === 0 ) {
+		return params;
+	}
+
+	//volume:12,shakeDuration:PT12S,p1:123 // initial
+	//"volume:12,shakeDuration:PT12S,p1:123" //add " to the end and beginning
+	//"volume":"12,shakeDuration":"PT12S,p1":"123" // replace all : into ":"
+	//"volume":"12","shakeDuration":"PT12S","p1":"123" // replace all , into ","
+
+	params = '"' + string + '"';
+	params = replaceSubstrings(params,':','":"');
+	params = replaceSubstrings(params,',','","');
+	return params;
+};

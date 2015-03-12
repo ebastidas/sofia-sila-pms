@@ -1,4 +1,4 @@
-<template name="Devices">
+<template name="Methods">
 	<div class="page-container container" id="content">
 		<div class="row" id="title_row">
 			<div class="col-md-12">
@@ -6,14 +6,14 @@
 				</div>
 			</div>
 		</div>
-		{{> DevicesView}}
+		{{> MethodsView}}
 	</div>
 </template>
 
-<template name="DevicesView">
+<template name="MethodsView">
 	<div id="dataview" class="">
 		<h2 id="component-title">
-			Devices
+			Methods
 		</h2>
 		<form id="dataview-controls" class="form-inline">
 			<div id="dataview-controls-insert" class="form-group">
@@ -80,47 +80,38 @@
 		</div>
 		{{else}}
 		<div id="dataview-data">
-			{{#if viewAsTable}} {{> DevicesViewTable}} {{/if}}
+			{{#if viewAsTable}} {{> MethodsViewTable}} {{/if}}
 		</div>
 		{{/if}}	
 		{{else}}
 		<div class="alert alert-info">
-			No devices :(
+			No methods :(
 		</div>
 		{{/if}}
 	</div>
 </template>
 
-<template name="DevicesViewTable">
+<template name="MethodsViewTable">
 	<table id="dataview-table" class="table table-striped table-hover">
 		<thead id="dataview-table-header">
 			<tr id="dataview-table-header-row">
-				<th class="th-sortable" data-sort="silaDeviceClassId">
-					SiLA Class ID
-				</th>
-				<th class="th-sortable" data-sort="name">
+				<th class="th-sortable" data-sort="methodNumber">
 					Name
-				</th>
-				<th class="th-sortable" data-sort="owner">
-					Owner
-				</th>
-				<th class="th-sortable" data-sort="url">
-					URL
-				</th>
-				<th class="th-sortable" data-sort="private">
-					Shared?
-				</th>
-				<th class="th-sortable" data-sort="note">
-					Note
 				</th>
 				<th class="th-sortable" data-sort="status">
 					Status
 				</th>
-				<th>
-					&nbsp;
+				<th class="th-sortable" data-sort="date">
+					Last Execution
 				</th>
-				<th>
-					&nbsp;
+				<th class="th-sortable" data-sort="deviceName">
+					Device Connected
+				</th>
+				<th class="th-sortable" data-sort="owner">
+					Owner
+				</th>
+				<th class="th-sortable" data-sort="private">
+					Shared?
 				</th>
 				<th>
 					&nbsp;
@@ -131,24 +122,27 @@
 			</tr>
 		</thead>
 		<tbody id="dataview-table-items">
-			{{#each tableItems}} {{> DevicesViewTableItems}} {{/each}}
+			{{#each tableItems}} {{> MethodsViewTableItems}} {{/each}}
 		</tbody>
 	</table>
 </template>
 
-<template name="DevicesViewTableItems">
+<template name="MethodsViewTableItems">
 	<tr id="dataview-table-items-row">
 		<td>
-			{{silaDeviceClassId}}
+			{{methodNumber}}
 		</td>
 		<td>
-			{{name}}
+			{{status}}
+		</td>
+		<td>
+			{{formatDate date 'MM-DD-YYYY'}}
+		</td>
+		<td>
+			{{deviceName}}
 		</td>
 		<td>
 			{{ownerId}}
-		</td>
-		<td>
-			{{url}}
 		</td>
 		<td>
 			{{#if private}}
@@ -157,21 +151,11 @@
 				Shared
 			{{/if}}
 		</td>
-		<td>
-			{{note}}
-		</td>
-		<td>
-			{{status}}
-		</td>
-		<td class="td-icon">
-			<span id="status-button" class="fa fa-refresh" title="Get Status">
-			</span>
-		</td>
-		<td class="td-icon">
-			<span id="lock-button" class="fa fa-unlock" title="Lock">
-			</span>
-		</td>
 		{{#if isOwner}}
+			<td class="td-icon">
+				<span id="share-button" class="fa fa-share-alt" title="Share">
+				</span>
+			</td>
 			<td class="td-icon">
 				<span id="edit-button" class="fa fa-pencil" title="Edit">
 				</span>

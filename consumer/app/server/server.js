@@ -123,14 +123,13 @@ Meteor.methods({
 				if(!err){
 		      			client[operation](args, function(err, soapResult) {
 						if(!err){
-							console.log("connectDeviceSoap " + JSON.stringify(soapResult, null, 4));
+							//console.log("connectDeviceSoap " + JSON.stringify(soapResult, null, 4));
 							callback(null, soapResult);
-							console.log("connectDeviceSoap END ===" );
 						}else{callback(err);}		
 		     			});
 				}else{callback(err);}
 			});
-  			}, 000);//delay for simulation - see the "Connecting..." message //TODO: Delete in production
+  			}, 1000);//delay for simulation - see the "Connecting..." message //TODO: Delete in production
 		}
 
 		//wrapping async for Meteor (that works sync only)

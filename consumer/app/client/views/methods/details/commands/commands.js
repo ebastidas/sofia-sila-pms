@@ -85,10 +85,18 @@ var runCommand = function(commandId, url, commandName, args){
 			newStatusMessage = response[commandName + "Result"].message;
 
 			if (newStatus==1) {
-				newStatusMessage = "success"; // workaround empty message in the simulator
+				newStatusMessage = "success"; // workaround empty message in the simulator. TODO: delete
 			}
-			if (newStatus==2) {
+			else if (newStatus==2) {
 				newStatusMessage += " (waiting/running...)"; // workaround for not knowing if the command is running or waiting in the queue. TODO: check via getStatus periodically
+			}
+			else if (newStatus==3){
+				//Asynchronous command has finished
+			}
+			else{
+				//TODO: catch all other status. Now change status of the method to "In Error"
+				var mc = MethodCommands.findOne({_id:commandId});
+				Methods.update({ _id: mc.methodId }, { "$set": {"status": "In Error"}});
 			}
 			
 			MethodCommands.update({ _id: commandId }, { "$set": {"status": newStatus, "statusMessage": newStatusMessage}});
@@ -108,8 +116,8 @@ var MethodsDetailsCommandsRun = function(cursor, methodId) {
 
 	var commands = MethodsDetailsCommandsViewItems(cursor);
 
-	//TODO:
-	//1. queue all the commands -> set Status to 'queued' to all commands. Issue: Find better solution for async commands, this will stop the client until all the commands finish 
+	
+	//1. queue all the commands -> set Status to 'queued' to all commands. //TODO: Issue. Find better solution for async commands, this will stop the client until all the commands finish 
 	//2. call each command sequentially: connectDeviceSoap
 
 	//TODO: add lock functionality
@@ -121,25 +129,30 @@ var MethodsDetailsCommandsRun = function(cursor, methodId) {
 	var previousCommandId; 
 	var previousCommandName; //BUG. TODO: delete. This is a Workaround for the bug in HSR bug by not allowing to call multiple sync (getStatus) commands in parallell (try calling getStatus at the same time sequentially to reproduce the error). This line gives some interval of time so the simulator can process. Delete this workaround for a better simulator or a device that allows parallel command calls/execution.
 
+	Methods.update({ _id: methodId }, { "$set": {"date": new Date()}});
+	Methods.update({ _id: methodId }, { "$set": {"status": "Running..."}});
+
 	_.each(commands, function(c){	
 		MethodCommands.update({ _id: c._id }, { "$set": {"status": "-", "statusMessage":"Queued"}});
 
-		if(!c.command_parameters){
-			c.command_parameters = '"requestId":"'+c.requestId+'"';
+		var params = getparametersAsJSON(c.command_parameters);
+
+		if(!params){
+			params = '"requestId":"'+c.requestId+'"';
 		}else{
-			c.command_parameters += ',"requestId":"'+c.requestId+'"';
+			params += ',"requestId":"'+c.requestId+'"';
 		}
 
 		if(c.commandName=="Reset"){
-			c.command_parameters += ',"eventReceiverURI":"'+ EVENT_RECEIVER_URI +'"'; //DEPLOY: change this in different server
-			c.command_parameters += ',"deviceId":"'+dev._id+'","simulationMode":"false"';
+			params += ',"eventReceiverURI":"'+ EVENT_RECEIVER_URI +'"'; //DEPLOY: change this in different server
+			params += ',"deviceId":"'+dev._id+'","simulationMode":"false"';
 		}
 		if(c.commandName=="LockDevice"){
-			c.command_parameters += ',"eventReceiverURI":"'+Session.get("eventReceiverURI")+'"'; //DEPLOY: change this in different server
-			c.command_parameters += ',"lockId":"123"'; //TODO: check lockId if device has been locked, and add to every device.
+			params += ',"eventReceiverURI":"'+Session.get("eventReceiverURI")+'"'; //DEPLOY: change this in different server
+			params += ',"lockId":"123"'; //TODO: check lockId if device has been locked, and add to every device.
 		}
 		
-		var argsString = '{' + c.command_parameters + '}'; // TODO: add dynamic parameters for all the commands
+		var argsString = '{' + params + '}'; // TODO: add dynamic parameters for all the commands
 		
 		var args = JSON.parse(argsString);
 
@@ -161,16 +174,14 @@ var MethodsDetailsCommandsRun = function(cursor, methodId) {
 			//Add observeChanges to previous command
 			//Defer the execution of the next command until the previous command has completely finished: code 1 (sync commands), or 3 (async commands)
 
-//console.log("---1.each.previousCommandId: ");
-//console.log(previousCommandId);
 			var query = MethodCommands.find({_id:previousCommandId});
-//console.log("---2.each.query: " + query);
-//console.log(query);
+
 
 			var handle = query.observeChanges({
 			  changed: function (id, method_command) {
-			    if(method_command.status){				   
-//console.log("---observeChanges.changed.status: " + method_command.status + " changed in id " + id);
+			    if(method_command.status){
+
+	    	console.log(id + "--" + method_command.status);
 					if (method_command.status == 1 || method_command.status == 3 ){ //&& status is 1 (sync finished) || 3 (async finished)
 						handle.stop();
 
@@ -187,26 +198,50 @@ var MethodsDetailsCommandsRun = function(cursor, methodId) {
 						else{
 							previousCommandName = "";
 						}
-
-						
-
+					}else{
+						Methods.update({ _id: methodId }, { "$set": {"status": "In Error"}});
 					}
 			    }
-
 			  }
 			});
 			
 			// Stop listening after some time. //TODO: check this for long executions of methods
 			//setTimeout(function () {handle.stop();}, 86400000);
 		}
-
 		previousCommandId = c._id;
-	
-
 	});
 
-	Methods.update({ _id: methodId }, { "$set": {"date": new Date()}});
-	Methods.update({ _id: methodId }, { "$set": {"status": "Execution complete"}});
+
+
+	//TODO: uncomment this this for async error messages
+	///////////////////
+	//Hear for the last command to complete
+	var lastCommandId = _.last(commands)._id;
+	var queryLastCommand = MethodCommands.find({_id:lastCommandId});
+	var handleLastCommand = queryLastCommand.observeChanges({
+	  changed: function (id, method_command) {
+	    if(method_command.status){
+	    	console.log(id + "--" + method_command.status);
+			if (method_command.status == 1 || method_command.status == 3 ){ //&& status is 1 (sync finished) || 3 (async finished)
+				handleLastCommand.stop();
+				//check for last command and change the status of the method
+				Methods.update({ _id: methodId }, { "$set": {"status": "Execution completed"}});
+				
+			}
+			//TODO: check and uncomment this this for async error messages
+			/*
+			else{
+				console.log("here");
+				Methods.update({ _id: methodId }, { "$set": {"status": "In Error"}});
+			}
+			*/
+	    }
+	  }
+	});
+	// Stop listening after some time. //TODO: check this for long executions of methods
+	//setTimeout(function () {handle.stop();}, 86400000);
+
+
 
 };
 

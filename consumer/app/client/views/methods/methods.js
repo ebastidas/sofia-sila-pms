@@ -250,12 +250,18 @@ Template.MethodsViewTableItems.events({
 		e.preventDefault();
 		Router.go("methods.edit", {methodId: this._id});
 		return false;
+	},
+	"click #share-button": function(e, t) {
+		e.preventDefault();
+		var me =this;
+		var newValue = !me.private;
+		Methods.update({ _id: this._id }, { "$set": {"private":newValue}});				
+		return false;
 	}
 });
 
 Template.MethodsViewTableItems.helpers({
 	"isOwner": function() {
-		console.log(this);
 		return (this.ownerId === Meteor.userId());
 	}
 });
