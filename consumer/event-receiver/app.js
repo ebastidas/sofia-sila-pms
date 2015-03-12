@@ -6,8 +6,8 @@
   // Connection URL
   var url = 'mongodb://127.0.0.1:3001/meteor'; //DEPLOY: get relative IP
 
+  var wsdlIP = '0.0.0.0'; // DEPLOY: change to fixed wsdlIP if necesary (192.168.137.11) and also in the wsdl (xml) file
   var fileName= 'SiLA_example_EventReceiver.xml';
-  var ip = '0.0.0.0'; // DEPLOY: change to fixed ip if necesary (192.168.137.11) and also in the wsdl (xml) file
   var port = 8082; // DEPLOY: check if port is free
   var path = '/pms'; // path to web service
 
@@ -84,7 +84,7 @@
     response.end("404: Not Found: "+request.url);
   });
 
-  server.listen(port, ip);
+  server.listen(port, wsdlIP);
   soap.listen(server, path, myService, xml);
 
-  console.log('SiLA event reciever listening in: http://' + ip + ":" + port);
+  console.log('SiLA event reciever listening in: http://' + wsdlIP + ":" + port);
