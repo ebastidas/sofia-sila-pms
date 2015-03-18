@@ -44,7 +44,7 @@ Devices.before.update(function(userId, doc, fieldNames, modifier, options) {
 });
 
 Devices.before.remove(function(userId, doc) {
-	//TODO: Check running (or non running) methods. Alert this to the user before delete a device.
+	//TODO: Check running (or non running) experiments. Alert this to the user before delete a device.
 });
 
 Devices.after.insert(function(userId, doc) {

@@ -235,7 +235,7 @@ Template.DevicesViewTableItems.events({
 		e.preventDefault();
 		var me = this;
 		bootbox.dialog({
-			message: "Delete? Are you sure? Methods attached to this device might not run anymore",
+			message: "Delete? Are you sure? Experiments attached to this device might not run anymore",
 			title: "Delete",
 			animate: false,
 			buttons: {

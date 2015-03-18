@@ -7,8 +7,8 @@
 //================================
 
 
-this.DevicesController = RouteController.extend({
-	template: "Devices",
+this.ExperimentsInsertController = RouteController.extend({
+	template: "ExperimentsInsert",
 
 	yieldTemplates: {
 		/*YIELD_TEMPLATES*/
@@ -28,8 +28,8 @@ this.DevicesController = RouteController.extend({
 		
 
 		var subs = [
-			Meteor.subscribe("experiments"),
-			Meteor.subscribe("device_list")
+			Meteor.subscribe("devices"),
+			Meteor.subscribe("experiments_empty")
 		];
 		var ready = true;
 		_.each(subs, function(sub) {
@@ -44,8 +44,8 @@ this.DevicesController = RouteController.extend({
 
 		return {
 			params: this.params || {},
-			experiments: Experiments.find({}, {}),
-			device_list: Devices.find({}, {})
+			devices: Devices.find({}, {}),
+			experiments_empty: Experiments.findOne({_id:null}, {})
 		};
 		/*DATA_FUNCTION*/
 	},

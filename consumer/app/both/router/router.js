@@ -17,7 +17,7 @@ Router.configure({
 
 if(Meteor.isClient) {
 	var publicRoutes = ["home_public", "login", "register", "forgot_password", "reset_password"];
-	var privateRoutes = ["home_private", "devices", "devices.insert", "devices.details", "devices.edit", "methods", "methods.insert", "methods.details", "methods.details.commands", "methods.details.insert", "methods.details.edit", "methods.edit", "user_settings", "user_settings.profile", "user_settings.change_pass", "logout"];
+	var privateRoutes = ["home_private", "devices", "devices.insert", "devices.details", "devices.edit", "experiments", "experiments.insert", "experiments.details", "experiments.details.commands", "experiments.details.insert", "experiments.details.edit", "experiments.edit", "user_settings", "user_settings.profile", "user_settings.change_pass", "logout"];
 	var zonelessRoutes = [];
 
 	var roleMap = [
@@ -140,13 +140,13 @@ Router.map(function () {
 	this.route("devices.insert", {path: "/devices/insert", controller: "DevicesInsertController"});
 	this.route("devices.details", {path: "/devices/details/:deviceId", controller: "DevicesDetailsController"});
 	this.route("devices.edit", {path: "/devices/edit/:deviceId", controller: "DevicesEditController"});
-	this.route("methods", {path: "/methods", controller: "MethodsController"});
-	this.route("methods.insert", {path: "/methods/insert", controller: "MethodsInsertController"});
-	this.route("methods.details", {path: "/methods/details/:methodId", controller: "MethodsDetailsController"});
-	this.route("methods.details.commands", {path: "/methods/details/:methodId/commands", controller: "MethodsDetailsCommandsController"});
-	this.route("methods.details.insert", {path: "/methods/details/:methodId/insert", controller: "MethodsDetailsInsertController"});
-	this.route("methods.details.edit", {path: "/methods/details/:methodId/edit/:commandId", controller: "MethodsDetailsEditController"});
-	this.route("methods.edit", {path: "/methods/edit/:methodId", controller: "MethodsEditController"});
+	this.route("experiments", {path: "/experiments", controller: "ExperimentsController"});
+	this.route("experiments.insert", {path: "/experiments/insert", controller: "ExperimentsInsertController"});
+	this.route("experiments.details", {path: "/experiments/details/:experimentId", controller: "ExperimentsDetailsController"});
+	this.route("experiments.details.commands", {path: "/experiments/details/:experimentId/commands", controller: "ExperimentsDetailsCommandsController"});
+	this.route("experiments.details.insert", {path: "/experiments/details/:experimentId/insert", controller: "ExperimentsDetailsInsertController"});
+	this.route("experiments.details.edit", {path: "/experiments/details/:experimentId/edit/:commandId", controller: "ExperimentsDetailsEditController"});
+	this.route("experiments.edit", {path: "/experiments/edit/:experimentId", controller: "ExperimentsEditController"});
 	this.route("user_settings", {path: "/user_settings", controller: "UserSettingsController"});
 	this.route("user_settings.profile", {path: "/user_settings/profile", controller: "UserSettingsProfileController"});
 	this.route("user_settings.change_pass", {path: "/user_settings/change_pass", controller: "UserSettingsChangePassController"});
