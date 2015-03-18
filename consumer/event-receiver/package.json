@@ -5,7 +5,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "TODO: git://github.com/christkv/myfirstproject.git"
+    "url": "TODO: git://github.com/ebastidas/sila.git"
   },
   "dependencies": {
     "mongodb": "~2.0"
@@ -13,7 +13,7 @@
   "author": "Erick Bastidas",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "TODO: https://github.com/christkv/myfirstproject/issues"
+    "url": "TODO: https://github.com/ebastidas/sila/issues"
   },
-  "homepage": "TODO: https://github.com/christkv/myfirstproject"
+  "homepage": "TODO: https://github.com/ebastidas/sila"
 }
