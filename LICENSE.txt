@@ -15,5 +15,4 @@ Company: wega Informatik AG
 Website: http://www.wega-it.com
 Author: Erick Bastidas
 Email: ebastidas3@gmail.com
-Date: 2015-03-09
 ================================
