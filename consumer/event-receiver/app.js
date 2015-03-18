@@ -1,3 +1,11 @@
+//Copyright (c) 2015 wega Informatik AG | Erick Bastidas
+//================================
+//Company: wega Informatik AG
+//Website: http://www.wega-it.com
+//Author: Erick Bastidas
+//Email: ebastidas3@gmail.com
+//================================
+
 
   //////browser debugger in http://0.0.0.0:50500
   //var nomo = require('node-monkey').start({host:'0.0.0.0', port: 8081});
