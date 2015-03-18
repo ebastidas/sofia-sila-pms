@@ -49,15 +49,15 @@
               "version": "5.0.0"
             },
             "mime-types": {
-              "version": "2.0.9",
+              "version": "2.0.10",
               "dependencies": {
                 "mime-db": {
-                  "version": "1.7.0"
+                  "version": "1.8.0"
                 }
               }
             },
             "node-uuid": {
-              "version": "1.4.2"
+              "version": "1.4.3"
             },
             "qs": {
               "version": "2.3.3"
@@ -94,7 +94,7 @@
               "version": "2.3.1",
               "dependencies": {
                 "hoek": {
-                  "version": "2.11.0"
+                  "version": "2.11.1"
                 },
                 "boom": {
                   "version": "2.6.1"
@@ -122,7 +122,7 @@
               }
             },
             "isstream": {
-              "version": "0.1.1"
+              "version": "0.1.2"
             }
           }
         },

@@ -1,3 +1,12 @@
+//Copyright (c) 2015 wega Informatik AG | Erick Bastidas
+//================================
+//Company: wega Informatik AG
+//Website: http://www.wega-it.com
+//Author: Erick Bastidas
+//Email: ebastidas3@gmail.com
+//================================
+
+
 Meteor.startup(function() {
 	// read environment variables from Meteor.settings
 	if(Meteor.settings && Meteor.settings.env && _.isObject(Meteor.settings.env)) {

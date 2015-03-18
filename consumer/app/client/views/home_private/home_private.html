@@ -1,10 +1,16 @@
+<!--Copyright (c) 2015 wega Informatik AG | Erick Bastidas-->
+<!--================================-->
+<!--Company: wega Informatik AG-->
+<!--Website: http://www.wega-it.com-->
+<!--Author: Erick Bastidas-->
+<!--Email: ebastidas3@gmail.com-->
+<!--================================-->
+
+
 <template name="HomePrivate">
 	<div class="page-container container" id="content">
 		<div class="row" id="title_row">
 			<div class="col-md-12">
-				<h2 id="page_title" class="pull-left">
-					Welcome {{userFullName}}!
-				</h2>
 				<div id="page_menu" class="pull-right">
 				</div>
 			</div>
@@ -17,8 +23,12 @@
 	<div class="jumbotron ">
 		<div class="container">
 			<div class="pull-left">
+				<h3 id="page_title" class="pull-right">
+					Welcome {{userFullName}}!
+				</h3>
+				<br />
 				<h1 id="component-title">
-					SiLA Controller
+				SOFIA
 				</h1>
 				<p id="jumbotron-text">
 					<p><b>A SiLA Consumer Reference Implementation - Simple, Smart, Open Source</b><br /><br />How to?<br /><ol><li>Go to "Devices" and add a new device to your virtual lab. By default all new devices are private (only you can see it) but you can share it with your network.</li><li>Go to "Methods" and create a new method (which is linked to only one device). A Method is a list of SiLA commands to be executed sequentially. You can share the methods too.</li><li>Click in a method to add SiLA commands.</li><li>Run a method.<br />(Note: According to SiLA, to run a command like "Dispense", the device's status needs to be "idle". Try running the commands "Reset" and "Initialize", to change the status of the device from "startup" to "standby" and to "idle" finally. You can check the status of the device at anytime)</li></ol></p>
@@ -29,7 +39,7 @@
 					</a>
 				</p>
 				<p>
-					<br />Contribute? Source code is <a href="https://github.com/ebastidas/sila" target="_blank">here</a>.
+					<br />Contribute? Source code will be available soon.
 				</p>
 			</div>
 		</div>

@@ -1,3 +1,12 @@
+//Copyright (c) 2015 wega Informatik AG | Erick Bastidas
+//================================
+//Company: wega Informatik AG
+//Website: http://www.wega-it.com
+//Author: Erick Bastidas
+//Email: ebastidas3@gmail.com
+//================================
+
+
 Meteor.publish("device_list", function() {
 	return Devices.find({$or: [{ private: {$ne: true} },{ ownerId: this.userId }]}, {}); //TODO: {transform:function(doc) { var user = Meteor.users.findOne({_id: doc.ownerId }); if(user) doc.ownerId = user.profile.name; return doc; },sort:{createdAt:1}});
 });

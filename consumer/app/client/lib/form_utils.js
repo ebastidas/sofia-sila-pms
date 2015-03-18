@@ -1,3 +1,12 @@
+//Copyright (c) 2015 wega Informatik AG | Erick Bastidas
+//================================
+//Company: wega Informatik AG
+//Website: http://www.wega-it.com
+//Author: Erick Bastidas
+//Email: ebastidas3@gmail.com
+//================================
+
+
 this.isValidEmail = function(value) {
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	if(filter.test(value)) {
