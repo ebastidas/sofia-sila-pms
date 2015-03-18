@@ -52,6 +52,7 @@ Devices.after.insert(function(userId, doc) {
 	var currentStatus = '-';
 	var command = "GetStatus";
 	var args = {"requestId": "1"}; // TODO: SiLA issue
+
 	Meteor.call('connectDeviceSoap', url, command, args, function (error,response) {
   		// identify the error
   		if (!error) {
@@ -97,9 +98,6 @@ Devices.after.insert(function(userId, doc) {
 			});
 		}
 	});
-
-	
-
 });
 
 Devices.after.update(function(userId, doc, fieldNames, modifier, options) {

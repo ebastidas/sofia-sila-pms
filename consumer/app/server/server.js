@@ -127,7 +127,7 @@ Meteor.methods({
 	  	
 		//declare an async function
 		function delayedSoapRequest(callback) {
-  			setTimeout(function() {
+  			//setTimeout(function() {
 			soap.createClient(url, function(err, client) {
 				if(!err){
 		      			client[operation](args, function(err, soapResult) {
@@ -138,7 +138,7 @@ Meteor.methods({
 		     			});
 				}else{callback(err);}
 			});
-  			}, 1000);//delay for simulation - see the "Connecting..." message //TODO: Delete in production
+  			//}, 0000);//delay for simulation - see the "Connecting..." message //TODO: Delete in production
 		}
 
 		//wrapping async for Meteor (that works sync only)
