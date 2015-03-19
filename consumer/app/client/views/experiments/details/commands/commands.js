@@ -131,8 +131,8 @@ var ExperimentsDetailsCommandsRun = function(cursor, experimentId) {
 
 	//TODO: add lock functionality
 
-	var meth = Experiments.findOne({_id : experimentId});
-	var dev = Devices.findOne({_id : meth.deviceId});
+	var exp = Experiments.findOne({_id : experimentId});
+	var dev = Devices.findOne({_id : exp.deviceId});
 
 	var firstCommandFlag = true;
 	var previousCommandId; 
