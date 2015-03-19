@@ -28,7 +28,7 @@
 
   var updateStatus = function(db, args, callback) {
   // Get the documents collection
-  var collection = db.collection('method_commands');
+  var collection = db.collection('experiment_commands');
   var newStatus = args.returnValue.returnCode; 
   var newStatusMessage = args.returnValue.message;
   collection.update({ "requestId" : args.requestId.toString() }
