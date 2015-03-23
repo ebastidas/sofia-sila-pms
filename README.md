@@ -9,3 +9,6 @@ SOFIA is an open source, cross-platform project that was developed as a proof-of
 
 # How to install
 ...TODO...
+
+# How to run
+...TODO...
