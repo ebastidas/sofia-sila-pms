@@ -12,3 +12,6 @@ SOFIA is an open source, cross-platform project that was developed as a proof-of
 
 # How to run
 ...TODO...
+
+
+Copyright (c) 2015 wega Informatik AG | Erick Bastidas
