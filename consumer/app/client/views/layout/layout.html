@@ -77,9 +77,32 @@
 
 <template name="PublicLayoutLeftMenu">
 	<ul id="menu-items" class="nav navbar-nav">
-		<li id="menu-item-simple" class="{{menuItemClass 'home_public'}}">
+		<li id="menu-item-simple" class="{{menuItemClass 'home_public'}}" >
 			<a href="{{pathFor 'home_public'}}">
-				Home
+				<span class="fa fa-home">
+				</span>
+				&nbsp;Home
+			</a>
+		</li>
+		<li id="menu-item-simple" class="{{menuItemClass 'experiments'}}">
+			<a href="{{pathFor 'login'}}">
+				<span class="fa fa-flask">
+				</span>
+				&nbsp;Experiments
+			</a>
+		</li>
+		<li id="menu-item-simple" class="{{menuItemClass 'devices'}}">
+			<a href="{{pathFor 'login'}}">
+				<span class="fa fa-eyedropper">
+				</span>
+				&nbsp;Devices
+			</a>
+		</li>
+		<li id="menu-item-simple" class="{{menuItemClass 'help'}}">
+			<a href="{{pathFor 'help'}}">
+				<span class="fa fa-question-circle">
+				</span>
+				&nbsp;Help
 			</a>
 		</li>
 	</ul>
@@ -144,17 +167,30 @@
 	<ul id="menu-items" class="nav navbar-nav">
 		<li id="menu-item-simple" class="{{menuItemClass 'home_private'}}">
 			<a href="{{pathFor 'home_private'}}">
-				Home
+				<span class="fa fa-home">
+				</span>
+				&nbsp;Home
 			</a>
 		</li>
 		<li id="menu-item-simple" class="{{menuItemClass 'experiments'}}">
 			<a href="{{pathFor 'experiments'}}">
-				Experiments
+				<span class="fa fa-flask">
+				</span>
+				&nbsp;Experiments
 			</a>
 		</li>
 		<li id="menu-item-simple" class="{{menuItemClass 'devices'}}">
 			<a href="{{pathFor 'devices'}}">
-				Devices
+				<span class="fa fa-eyedropper">
+				</span>
+				&nbsp;Devices
+			</a>
+		</li>
+		<li id="menu-item-simple" class="{{menuItemClass 'help'}}">
+			<a href="{{pathFor 'help'}}">
+				<span class="fa fa-question-circle">
+				</span>
+				&nbsp;Help
 			</a>
 		</li>
 	</ul>

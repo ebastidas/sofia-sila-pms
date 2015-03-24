@@ -51,13 +51,19 @@
 				SOFIA
 				</h1>
 				<p id="jumbotron-text">
-					<p><b>SOFIA (SiLA-compliant, Open source, Fast, Intelligent Application) is a <a href="http://www.sila-standard.org/standards/pms/">SiLA PMS Consumer</a> as a reference implementation.</b><br /><br />How to?<br /><ol><li>Go to "Devices" and add a new device to your virtual lab. By default all new devices are private (only you can see it) but you can share it with your network. There is a Dispenser simulated device that you can add and use at the URL:<br />http://isabela:85/Dispenser?wsdl</li><li>Go to "Experiments" and create a new experiment (which is linked to only one device). A Experiment is a list of SiLA commands to be executed sequentially. You can share the experiments too.</li><li>Click in a experiment to add SiLA commands.</li><li>Run a experiment.<br />(Note: According to SiLA, to run a command like "Dispense", the device's status needs to be "idle". Try running the commands "Reset" and "Initialize", to change the status of the device from "startup" to "standby" and to "idle" finally. You can check the status of the device at anytime)</li></ol></p>
+					<p><b>SOFIA (SiLA-compliant, Open source, Fast, Intelligent Application) is a <a href="http://www.sila-standard.org/standards/pms/">SiLA PMS Consumer</a> as a reference implementation.</b><br /><br />How to run an experiment?<br /><ol><li>Go to "Devices" and add a new SiLA device to your virtual lab. By default all new devices are private (only you can see it) but you can share it with your network. For test purposes only, a simulator* of a SiLA device (a Dispenser) can be added as a new device using the URL:<br />&nbsp;&nbsp;&nbsp;http://isabela:85/Dispenser?wsdl</li><li>Go to "Experiments" and create a new experiment (which is linked to only one device for now). A Experiment is a list/steps of SiLA commands to be executed sequentially. You can share the experiments too with other users.</li><li>Add new SiLA commands in an experiment</li><li>Click on Run Experiment.**<br /></li></ol></p>
 				</p>
 				<p id="jumbotron-button">
 					<a href="#" class="btn btn-primary btn-lg" role="button">
-						Devices &raquo;
+						<span class="fa fa-eyedropper">
+						</span>
+						&nbsp;Devices
 					</a>
 				</p>
+				<br />
+				<div>
+ 					* Provided by Actelion and HSR-ILT, the simulator provides the exact same functionality of a SiLA converter connected to a Thermo Multidrop Combi Dispenser. An experiment running in the real (not simulated) dispenser can be seen <a href="https://youtu.be/G2OMKYlPQ0c">here</a>.<br />** According to SiLA technical specifications, to run a command like "Dispense", the status of the device has to be "idle" beforehand. If the device is not "idle", create a new experiment and run 2 commands in this order: "Reset" and "Initialize". This will change the status of the device from "startup" to "standby" and to "idle" finally. You can check the status of the device at anytime clicking in the refresh button next to every device.
+				</div>
 				<p>
 					<br />Contribute? Source code will be available soon.
 				</p>

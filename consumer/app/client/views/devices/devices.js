@@ -312,7 +312,7 @@ Template.DevicesViewTableItems.events({
 
 		Meteor.call('connectDeviceSoap', url, command, args, function (error,response) {
 	  		if (!error) {
-				Devices.update({ _id: me._id }, { "$set": {"status":response.state + " (at: " + response.currentTime + ")"}});	  		
+				Devices.update({ _id: me._id }, { "$set": {"status":response.state + " (at: " + response.currentTime + ")"}});//BUG: Users who are not the owner of the device cannot update a shared (seen by them) device as they are not the Owner, change this
 			}
 			else
 			{

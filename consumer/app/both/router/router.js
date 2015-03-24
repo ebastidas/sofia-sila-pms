@@ -38,7 +38,7 @@ Router.configure({
 if(Meteor.isClient) {
 	var publicRoutes = ["home_public", "login", "register", "forgot_password", "reset_password"];
 	var privateRoutes = ["home_private", "devices", "devices.insert", "devices.details", "devices.edit", "experiments", "experiments.insert", "experiments.details", "experiments.details.commands", "experiments.details.insert", "experiments.details.edit", "experiments.edit", "user_settings", "user_settings.profile", "user_settings.change_pass", "logout"];
-	var zonelessRoutes = [];
+	//var zonelessRoutes = ["help"];
 
 	var roleMap = [
 		
@@ -170,5 +170,7 @@ Router.map(function () {
 	this.route("user_settings", {path: "/user_settings", controller: "UserSettingsController"});
 	this.route("user_settings.profile", {path: "/user_settings/profile", controller: "UserSettingsProfileController"});
 	this.route("user_settings.change_pass", {path: "/user_settings/change_pass", controller: "UserSettingsChangePassController"});
-	this.route("logout", {path: "/logout", controller: "LogoutController"});/*ROUTER_MAP*/
+	this.route("logout", {path: "/logout", controller: "LogoutController"});
+	this.route("help", {path: "/help"});
+/*ROUTER_MAP*/
 });

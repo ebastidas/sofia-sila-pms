@@ -43,22 +43,32 @@
 	<div class="jumbotron ">
 		<div class="container">
 			<div class="pull-left">
+				<h3 class="pull-right">
+					<p id="jumbotron-button">
+					<a href="#" class="btn btn-primary btn-lg" role="button">
+						<span class="fa fa-power-off">
+						</span>
+						&nbsp;Start
+					</a>
+				</p>
+				</h3>
+				<br />
 				<h1 id="component-title">
 				SOFIA
 				</h1>
 				<p id="jumbotron-text">
-					<p><b>SOFIA (SiLA-compliant, Open source, Fast, Intelligent Application) is a <a href="http://www.sila-standard.org/standards/pms/">SiLA PMS Consumer</a> as a reference implementation.</b><br /><br />What can you do?<br /><ul><li>Add SiLA devices to your virtual lab</li><li>Share and discover SiLA devices in your network</li><li>Connect multiple SiLA devices (or SiLA drivers for non-SiLA devices)</li><li>Run Experiments and execute SiLA Commands on any device in your virtual lab</li></ul></p>
+					<p>SOFIA (<b>S</b>iLA-compliant, <b>O</b>pen source, <b>F</b>ast, <b>I</b>ntelligent <b>A</b>pplication) &mdash; a <a href="http://www.sila-standard.org/standards/pms/">SiLA PMS Consumer</a></p>
+					<div class="videowrapper"><iframe src="https://www.youtube.com/embed/G2OMKYlPQ0c?rel=0" frameborder="0" allowfullscreen></iframe></div>
+					<p>What can SOFIA do?<br /><ul><li><b>Connect</b> multiple SiLA-compliant lab devices and add them to your virtual lab.</li><li><b>Discover</b> lab devices in your network (added from other registered users), and <b>share</b> your device to your trusted network.</li><li><b>Run</b> Experiments by executing SiLA Commands (e.g. move labware with a robot, dispense a liquid) and get data (e.g. temperature, status, duration) from your lab devices. You can also share in <b>real-time</b> the results of the execution with other users in your network.</li></ul></p>
 				</p>
-				<p id="jumbotron-button">
-					<a href="#" class="btn btn-primary btn-lg" role="button">
-						Start &raquo;
-					</a>
-				</p>
-				<p>
-					<br />Contribute? Source code will be available soon.
-				</p>
+				<p>SOFIA is an open source, cross-platform project that was developed as a proof-of-concept for the SiLA core principles: the “Lab of the Future”, a rapid innovation ecosystem connecting devices and people, and exchanging knowledge. SOFIA facilitates the future open source development of more advanced functionalities of a SiLA PMS, such as a scheduler, workflow engine, etc. SOFIA could be potentially developed into an on-demand laboratory services hosted in the cloud, where users can run real-time experiments in remote labs across the globe. For more information, click <a href="{{pathFor 'help'}}">here</a>.</p>
+				<br />				
+				<p>Contribute? Source code will be available soon.</p>
+				<br />
+				<div class="pull-right">
+ 					* The video was recorded in Actelion's lab in Allschwil, Switzerland.
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
-
