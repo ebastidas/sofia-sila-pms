@@ -4,6 +4,10 @@ SOFIA (<b>S</b>iLA-compliant, <b>O</b>pen source, <b>F</b>ast, <b>I</b>ntelligen
 
 SOFIA enable you to connect multiple SiLA-compliant lab devices to your virtual lab, share and discover SiLA lab devices in your network, execute SiLA Commands (e.g. move a robot, dispense a liquid) and get data (e.g. temperature, status, duration) from your lab devices, and collaborate and share in real time your protocols/methods runs with any other user in your network.
 
+A video of SOFIA controlling a dispenser in the lab can be seen in the following link:
+
+https://youtu.be/lelSgY8S-pM
+
 SOFIA is an open source, cross-platform project that was developed as a proof-of-concept for the SiLA core principles: the “Lab of the Future”, a rapid innovation ecosystem connecting devices and people, and exchanging knowledge. SOFIA facilitates the future open source development of more advanced functionalities of a SiLA PMS, such as a scheduler, workflow engine, device management, etc. SOFIA could potentially be developed into an on-demand laboratory services hosted in the cloud, where user can run real-time experiments in remote labs across the globe.
 
 
@@ -14,4 +18,4 @@ SOFIA is an open source, cross-platform project that was developed as a proof-of
 ...TODO...
 
 
-Copyright (c) 2015 wega Informatik AG | Erick Bastidas
+Copyright (c) 2015 <a href="http://www.wega-it.com/">wega Informatik AG</a> | <a href="mailto:erick.bastidas@wega-it.com">Erick Bastidas</a>
