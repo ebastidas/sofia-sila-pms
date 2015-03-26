@@ -33,7 +33,10 @@ Devices.allow({
 	},
 
 	update: function (userId, doc, fields, modifier) {
-		return userId && doc.ownerId == userId;
+		if (doc.private)
+			return userId && doc.ownerId == userId;
+		else
+			return userId;//BUG: Security hole, Here we allow everyone to update the device details. you can check the id of a device clicking on the details of it, like: http://sofia.com/devices/details/6Mk3HdS9BmkotAFPy, and then go to:http://sofia.com/devices/edit/6Mk3HdS9BmkotAFPy, and edit it without permission
 	},
 
 	remove: function (userId, doc) {
@@ -47,11 +50,10 @@ Devices.before.insert(function(userId, doc) {
 
 	
 	if(!doc.ownerId) doc.ownerId = userId;
-if(!doc.status) doc.status =  'UNKNOWN';
-
-				if(!doc.name) doc.name = 'UNKNOWN'; 
-				if(!doc.silaDeviceClassId) doc.silaDeviceClassId = 'UNKNOWN'; 
-				if(!doc.silaDeviceClassVersion) doc.silaDeviceClassVersion = 'UNKNOWN';
+	if(!doc.status) doc.status =  'UNKNOWN';
+	if(!doc.name) doc.name = 'UNKNOWN'; 
+	if(!doc.silaDeviceClassId) doc.silaDeviceClassId = 'UNKNOWN'; 
+	if(!doc.silaDeviceClassVersion) doc.silaDeviceClassVersion = 'UNKNOWN';
 
 });
 

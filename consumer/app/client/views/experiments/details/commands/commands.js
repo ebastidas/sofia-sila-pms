@@ -210,7 +210,6 @@ var ExperimentsDetailsCommandsRun = function(cursor, experimentId) {
 			  changed: function (id, experiment_command) {
 			    if(experiment_command.status){
 
-	    	console.log(id + "--" + experiment_command.status);
 					if (experiment_command.status == 1 || experiment_command.status == 3 ){ //&& status is 1 (sync finished) || 3 (async finished)
 						handle.stop();
 
@@ -250,8 +249,7 @@ var ExperimentsDetailsCommandsRun = function(cursor, experimentId) {
 	var handleLastCommand = queryLastCommand.observeChanges({
 	  changed: function (id, experiment_command) {
 	    if(experiment_command.status){
-	    	console.log(id + "--" + experiment_command.status);
-			if (experiment_command.status == 1 || experiment_command.status == 3 ){ //&& status is 1 (sync finished) || 3 (async finished)
+	    	if (experiment_command.status == 1 || experiment_command.status == 3 ){ //&& status is 1 (sync finished) || 3 (async finished)
 				handleLastCommand.stop();
 				//check for last command and change the status of the experiment
 				Experiments.update({ _id: experimentId }, { "$set": {"status": "Execution completed"}});
@@ -337,7 +335,30 @@ Template.ExperimentsDetailsCommandsView.events({
 
 	"click #dataview-insert-button": function(e, t) {
 		e.preventDefault();
-		Router.go("experiments.details.insert", {experimentId: this.params.experimentId});
+
+		var experimentOwnerId = Experiments.findOne({_id:this.params.experimentId},{}).ownerId;
+
+		if(experimentOwnerId == Meteor.userId())
+		{
+			Router.go("experiments.details.insert", {experimentId: this.params.experimentId});
+		}
+		else{
+			bootbox.dialog({
+			message: "Only the owner of the experiment can add commands. Create your own experiment to add commands.",
+			title: "Permission denied",
+			animate: false,
+			buttons: {
+				success: {
+					label: "OK",
+					className: "btn-success",
+					callback: function() {
+					}
+				}
+			}
+			});
+			return false;
+		}
+
 	},
 
 	"click #dataview-export-default": function(e, t) {
@@ -362,68 +383,93 @@ Template.ExperimentsDetailsCommandsView.events({
 
 	"click #dataview-run-button": function(e, t) {
 		e.preventDefault();
-		Experiments.update({ _id: this.params.experimentId }, { "$set": {"status":"Running"}});
 
+		var exp = Experiments.findOne({_id : this.params.experimentId});
+		var dev = Devices.findOne({_id : exp.deviceId});
 
+		if(dev){
+			Experiments.update({ _id: this.params.experimentId }, { "$set": {"status":"Running"}});
 
-/*
+			ExperimentsDetailsCommandsRun(this.experiment_commands, this.params.experimentId);
+		}else{
+			bootbox.dialog({
+			message: "The device attached to this experiment is not shared with you. Ask the owner of the device to share it before you can run this experiment.",
+			title: "Permission denied",
+			animate: false,
+			buttons: {
+				success: {
+					label: "OK",
+					className: "btn-success",
+					callback: function() {
+					}
+				}
+			}
+			});
+			return false;
 
-	var myJobs = JobCollection('myJobQueue1');
-  	Meteor.subscribe('allJobs1');
-
-  // Because of the server settings, the code below will
-  // only work if the client is authenticated.
-  // On the server, all of it would run unconditionally.
-
-  // Create a job:
-  var job = myJobs.createJob('sendEmail', // type of job
-    // Job data that you define, including anything the job
-    // needs to complete. May contain links to files, etc...
-    {
-      address: 'bozo@clowns.com',
-      subject: 'Critical rainbow hair shortage',
-      message: 'LOL; JK, KThxBye.'
-    }
-  );
-
-console.log(job);
-
-  // Set some properties of the job and then submit it
-  job.save();               // Commit it to the server
+		}
 
 
 
 
-var workers = Job.processJobs('myJobQueue1', 'sendEmail',
-      function (job, cb) {
-        // This will only be called if a
-        // 'sendEmail' job is obtained
-        var email = job.data; // Only one email per job
-        sendEmail(email.address, email.subject, email.message,
-          function(err) {
-            if (err) {
-            	console.log("job error");
-              job.log("Sending failed with error" + err,
-                {level: 'warning'});
-              job.fail("" + err);
-            } else {
-            	console.log("job done");
-              job.done();
-            }
-            // Be sure to invoke the callback
-            // when work on this job has finished
-            cb();
-          }
-        );
-      }
-    );
+
+		/*
+
+		//RUN EXPERIMENT IN THE BACKGROUND AS A JOB
+
+			var myJobs = JobCollection('myJobQueue1');
+		  	Meteor.subscribe('allJobs1');
+
+		  // Because of the server settings, the code below will
+		  // only work if the client is authenticated.
+		  // On the server, all of it would run unconditionally.
+
+		  // Create a job:
+		  var job = myJobs.createJob('sendEmail', // type of job
+		    // Job data that you define, including anything the job
+		    // needs to complete. May contain links to files, etc...
+		    {
+		      address: 'bozo@clowns.com',
+		      subject: 'Critical rainbow hair shortage',
+		      message: 'LOL; JK, KThxBye.'
+		    }
+		  );
+
+		console.log(job);
+
+		  // Set some properties of the job and then submit it
+		  job.save();               // Commit it to the server
 
 
-*/
 
-//UNCOMMENT NEXT LINE
-		ExperimentsDetailsCommandsRun(this.experiment_commands, this.params.experimentId);
-		//Router.go("experiments.details.insert", {experimentId: this.params.experimentId});
+
+		var workers = Job.processJobs('myJobQueue1', 'sendEmail',
+		      function (job, cb) {
+		        // This will only be called if a
+		        // 'sendEmail' job is obtained
+		        var email = job.data; // Only one email per job
+		        sendEmail(email.address, email.subject, email.message,
+		          function(err) {
+		            if (err) {
+		            	console.log("job error");
+		              job.log("Sending failed with error" + err,
+		                {level: 'warning'});
+		              job.fail("" + err);
+		            } else {
+		            	console.log("job done");
+		              job.done();
+		            }
+		            // Be sure to invoke the callback
+		            // when work on this job has finished
+		            cb();
+		          }
+		        );
+		      }
+		    );
+
+
+		*/
+
 
 	}
 
@@ -528,5 +574,8 @@ Template.ExperimentsDetailsCommandsViewTableItems.events({
 Template.ExperimentsDetailsCommandsViewTableItems.helpers({
 	"isCommandAccepted": function() {
 		return (this.status != '-');
+	},
+	"isOwner": function() {
+		return (this.ownerId === Meteor.userId());
 	}
 });

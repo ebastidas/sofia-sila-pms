@@ -360,7 +360,7 @@
 
     <wsdl:port name="EventReceiverSoap" binding="tns:EventReceiverSoap">
 
-      <soap:address location="http://0.0.0.0:8082/pms"/>
+      <soap:address location="http://0.0.0.0:8082/sila-event-receiver"/>
 
     </wsdl:port>
 

@@ -281,10 +281,35 @@ Template.ExperimentsViewTableItems.events({
 		return false;
 	},
 	"click #share-button": function(e, t) {
-		e.preventDefault();
+		e.preventDefault();		
 		var me =this;
-		var newValue = !me.private;
-		Experiments.update({ _id: this._id }, { "$set": {"private":newValue}});				
+
+		var isDevicePrivate = Devices.findOne({_id:me.deviceId},{}).private;
+
+		if(isDevicePrivate){
+			bootbox.dialog({
+				message: "You first need to share the device attached to this experiment",
+				title: "Share your device",
+				animate: false,
+				buttons: {
+					success: {
+						label: "Go to Devices",
+						className: "btn-success",
+						callback: function() {
+							Router.go("devices", {});
+						}
+					},
+					danger: {
+						label: "No",
+						className: "btn-default"
+					}
+				}
+			});
+		}
+		else{
+			var newValue = !me.private;
+			Experiments.update({ _id: this._id }, { "$set": {"private":newValue}});
+		}
 		return false;
 	}
 });

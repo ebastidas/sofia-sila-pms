@@ -34,10 +34,10 @@
   // Connection URL
   var url = 'mongodb://127.0.0.1:3001/meteor'; //DEPLOY: get relative IP
 
-  var wsdlIP = '0.0.0.0'; // DEPLOY: change to fixed wsdlIP if necesary (192.168.137.11) and also in the wsdl (xml) file
+  var wsdlIP = '0.0.0.0'; // DEPLOY: change to fixed wsdlIP if necesary (192.168.x.x) and also in the wsdl (xml) file
   var fileName= 'SiLA_example_EventReceiver.xml';
   var port = 8082; // DEPLOY: check if port is free
-  var path = '/pms'; // path to web service
+  var path = '/sila-event-receiver'; // path to web service
 
   var http = require('http');
   var soap = require('soap');

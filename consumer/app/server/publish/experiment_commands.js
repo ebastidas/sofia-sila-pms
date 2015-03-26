@@ -26,16 +26,20 @@
 //   Email: ebastidas3@gmail.com
 //=========================================================================
 
+//TODO: check for ownerId for every command if the experiment is shared or private
 
 Meteor.publish("experiment_commands", function(experimentId) {
-	return ExperimentCommands.find({experimentId:experimentId,ownerId:this.userId}, {transform:function(doc) { var command = CommonCommandSet.findOne({_id: doc.commandId }); if(command) doc.commandName = command.name; return doc; },sort:{createdAt:1}});
+	//return ExperimentCommands.find({experimentId:experimentId,ownerId:this.userId}, {transform:function(doc) { var command = CommonCommandSet.findOne({_id: doc.commandId }); if(command) doc.commandName = command.name; return doc; },sort:{createdAt:1}});
+	return ExperimentCommands.find({experimentId:experimentId}, {transform:function(doc) { var command = CommonCommandSet.findOne({_id: doc.commandId }); if(command) doc.commandName = command.name; return doc; },sort:{createdAt:1}});
 });
 
 Meteor.publish("experiment_commands_empty", function() {
-	return ExperimentCommands.find({_id:null,ownerId:this.userId}, {});
+	//return ExperimentCommands.find({_id:null,ownerId:this.userId}, {});
+	return ExperimentCommands.find({_id:null}, {});
 });
 
 Meteor.publish("experiment_command", function(commandId) {
-	return ExperimentCommands.find({_id:commandId,ownerId:this.userId}, {});
+	//return ExperimentCommands.find({_id:commandId,ownerId:this.userId}, {});
+	return ExperimentCommands.find({_id:commandId}, {});
 });
 
