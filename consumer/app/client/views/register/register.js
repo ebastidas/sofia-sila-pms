@@ -49,6 +49,9 @@ Template.Register.events({
 		var register_name = t.find('#register_name').value.trim();
 		var register_email = t.find('#register_email').value.trim();
 		var register_password = t.find('#register_password').value;
+		var register_company = t.find('#register_company').value.trim();
+		var register_address = t.find('#register_address').value.trim();
+		var register_telephone = t.find('#register_telephone').value.trim();
 
 		// check name
 		if(register_name == "")
@@ -76,7 +79,7 @@ Template.Register.events({
 		}
 
 		submit_button.button("loading");
-		Accounts.createUser({email: register_email, password : register_password, profile: { name: register_name }}, function(err) {
+		Accounts.createUser({email: register_email, password : register_password, profile: { name: register_name, company: register_company, address: register_address, telephone: register_telephone }}, function(err) {
 			submit_button.button("reset");
 			if(err)
 				pageSession.set("errorMessage", err.message);

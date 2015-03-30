@@ -27,14 +27,14 @@
 //=========================================================================
 
 
-Template.help.rendered = function() {
+Template.Help.rendered = function() {
 	/*TEMPLATE_RENDERED_CODE*/
 };
 
-Template.help.events({
+Template.Help.events({
 
 });
 
-Template.help.helpers({
+Template.Help.helpers({
 
 });
