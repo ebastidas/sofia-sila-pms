@@ -125,7 +125,8 @@
 </template>
 
 <template name="ExperimentsDetailsCommandsViewTable">
-	<table id="dataview-table" class="table table-striped">
+	<div class="table-responsive">
+	<table id="dataview-table" class="table table-hover">
 		<thead id="dataview-table-header">
 			<tr id="dataview-table-header-row">
 				<!--<th class="th-sortable" data-sort="commandName">-->
@@ -164,6 +165,7 @@
 			{{#each tableItems}} {{> ExperimentsDetailsCommandsViewTableItems}} {{/each}}
 		</tbody>
 	</table>
+	</div>
 </template>
 
 <template name="ExperimentsDetailsCommandsViewTableItems">

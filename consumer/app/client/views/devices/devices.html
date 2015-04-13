@@ -121,6 +121,7 @@
 </template>
 
 <template name="DevicesViewTable">
+	<div class="table-responsive">
 	<table id="dataview-table" class="table table-striped table-hover">
 		<thead id="dataview-table-header">
 			<tr id="dataview-table-header-row">
@@ -166,6 +167,7 @@
 			{{#each tableItems}} {{> DevicesViewTableItems}} {{/each}}
 		</tbody>
 	</table>
+	</div>
 </template>
 
 <template name="DevicesViewTableItems">
