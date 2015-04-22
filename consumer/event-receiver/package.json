@@ -8,7 +8,8 @@
     "url": "TODO: git://github.com/ebastidas/sila.git"
   },
   "dependencies": {
-    "mongodb": "~2.0"
+    "mongodb": "~2.0",
+    "soap": "0.7.0"
   },
   "author": "Erick Bastidas",
   "license": "Apache 2.0",
