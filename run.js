@@ -124,7 +124,7 @@ fs.writeFileSync(wsdlFilename, newWSDL,'utf8');
 
 
 //run event-receiver
- command = "nodejs " + __dirname + "/consumer/event-receiver/app.js";
+ command = "node " + __dirname + "/consumer/event-receiver/app.js";
  child = exec(command, function (error, stdout, stderr) {
   //sys.print('stdout: ' + stdout);
   //sys.print('stderr: ' + stderr);
