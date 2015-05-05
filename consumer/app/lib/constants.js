@@ -26,6 +26,4 @@
 //   Email: ebastidas3@gmail.com
 //=========================================================================
 
-
-//DEPLOY SETTINGS. TODO: Put this in the Meteor settings file
-EVENT_RECEIVER_URI = 'http://127.0.0.1:8082/sila-event-receiver?wsdl';
+CONSTANT = 'value';

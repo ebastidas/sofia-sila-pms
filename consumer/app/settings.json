@@ -1,0 +1,13 @@
+{
+	"comments": "Copyright (c) 2015 wega Informatik AG | Erick Bastidas",
+	"public": {
+		"sofia_IP": "127.0.0.1",
+		"sofia_port": "3000",
+		"mongo_IP": "127.0.0.1",
+		"mongo_port": "3001",
+		"sofia_event_receiver_port": "3002"
+	},
+	"private": {
+		"SOAPdelayTime": "0100"
+	}
+}

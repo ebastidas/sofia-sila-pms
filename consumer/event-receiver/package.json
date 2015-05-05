@@ -5,16 +5,16 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "TODO: git://github.com/ebastidas/sila.git"
+    "url": "TODO: git://github.com/ebastidas/sofia-sila-pms.git"
   },
   "dependencies": {
     "mongodb": "~2.0",
     "soap": "0.7.0"
   },
   "author": "Erick Bastidas",
-  "license": "Apache 2.0",
+  "license": "GPL",
   "bugs": {
-    "url": "TODO: https://github.com/ebastidas/sila/issues"
+    "url": "TODO: https://github.com/ebastidas/sofia-sila-pms/issues"
   },
-  "homepage": "TODO: https://github.com/ebastidas/sila"
+  "homepage": "TODO: https://github.com/ebastidas/sofia-sila-pms"
 }
