@@ -103,8 +103,8 @@ fs.writeFileSync(meteorSettingsFilename, JSON.stringify(content, null, '\t'));
 //edit Event Receiver wsdl file
 var wsdlFilename = __dirname + '/consumer/event-receiver/SiLA_example_EventReceiver.xml';
 var file_content = fs.readFileSync(wsdlFilename,'utf8');
-var reg = /soap:address location=[\s\S]*sila-event-receiver/;
-var newAddress = 'soap:address location="http://' + sofiaIP + ':' + sofiaEventReceiverPort + '/sila-event-receiver';
+var reg = /soap:address location=[\s\S]*sofia/;
+var newAddress = 'soap:address location="http://' + sofiaIP + ':' + sofiaEventReceiverPort + '/sofia';
 var newWSDL = file_content.replace(reg, newAddress);
 fs.writeFileSync(wsdlFilename, newWSDL,'utf8');
 //////////////////////////////////////////////////////////////////

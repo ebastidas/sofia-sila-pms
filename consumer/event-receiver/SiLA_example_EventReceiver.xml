@@ -179,7 +179,7 @@
   </wsdl:binding>
   <wsdl:service name="EventReceiver">
     <wsdl:port name="EventReceiverSoap" binding="tns:EventReceiverSoap">
-      <soap:address location="http://127.0.0.1:3002/sila-event-receiver"/>
+      <soap:address location="http://127.0.0.1:3002/sofia"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
