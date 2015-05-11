@@ -1,5 +1,5 @@
 {
-  "name": "sila-event-receiver",
+  "name": "sofia",
   "version": "1.0.0",
   "description": "SiLA event receiver",
   "main": "app.js",

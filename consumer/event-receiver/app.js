@@ -45,7 +45,7 @@ var sofiaEventReceiverPort = content.public.sofia_event_receiver_port;
 
 var url = 'mongodb://'+mongoIP+':'+mongoPort+'/meteor';
 var fileName= __dirname + '/SiLA_example_EventReceiver.xml';
-var path = '/sila-event-receiver'; // path to web service
+var path = '/sofia'; // path to web service
 
 
 

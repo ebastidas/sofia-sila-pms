@@ -173,11 +173,11 @@ var ExperimentsDetailsCommandsRun = function(cursor, experimentId) {
 		}
 
 		if(c.commandName=="Reset"){
-			params += ',"eventReceiverURI":"http://'+ Meteor.settings.public.sofia_IP + ':' + Meteor.settings.public.sofia_event_receiver_port +'/sila-event-receiver?wsdl"'; //DEPLOY: change this in different server
+			params += ',"eventReceiverURI":"http://'+ Meteor.settings.public.sofia_IP + ':' + Meteor.settings.public.sofia_event_receiver_port +'/sofia?wsdl"'; //DEPLOY: change this in different server
 			params += ',"deviceId":"'+dev._id+'","simulationMode":"false"';
 		}
 		if(c.commandName=="LockDevice"){
-			params += ',"eventReceiverURI":"http://'+ Meteor.settings.public.sofia_IP + ':' + Meteor.settings.public.sofia_event_receiver_port +'/sila-event-receiver?wsdl"'; //DEPLOY: change this in different server
+			params += ',"eventReceiverURI":"http://'+ Meteor.settings.public.sofia_IP + ':' + Meteor.settings.public.sofia_event_receiver_port +'/sofia?wsdl"'; //DEPLOY: change this in different server
 			params += ',"lockId":"123"'; //TODO: check lockId if device has been locked, and add to every device.
 		}
 		
