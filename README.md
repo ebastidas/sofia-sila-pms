@@ -19,9 +19,9 @@ SOFIA could potentially be developed into an on-demand laboratory services hoste
 
 
 # How to run
-To install and run SOFIA, you first need to install <a href="http://git-scm.com/">git</a>, <a href="https://nodejs.org/">node.js (v0.12.2)</a>, <a href="https://www.npmjs.com/">npm (v2.7.4)</a>, and <a href="https://www.meteor.com/">meteor (v1.1)</a>.
+To install and run SOFIA, you first need to install <a href="http://git-scm.com/">git</a>, <a href="https://nodejs.org/">node.js (v0.12.2+)</a>, <a href="https://www.npmjs.com/">npm (v2.7.4)</a>, and <a href="https://www.meteor.com/">meteor (v1.1)</a>. The run script will run only in node.js version 0.12 or higher (check in the terminal your version with "node -v").
 
-The following commands are tested and working in Linux (Ubuntu 14.04) and Mac OS X.
+The following commands are tested and working in Linux (Ubuntu 14.04) and Mac OS X. The "run.js" script doesn't run in Windows (yet), althought SOFIA is fully compatible for Windows. A new "run.js" will be created soon to allow the installation in Windows.
 
 <dl>
   <dt>1. Download SOFIA:</dt>
