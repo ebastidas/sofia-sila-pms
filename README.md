@@ -46,6 +46,17 @@ If you need to communicate to SiLA lab devices/drivers hosted in different IPs (
 SOFIA will run now at <a href="http://192.168.0.1/">http://192.168.0.1:80/</a> in your browser, and will be able to connect and control all the SiLA lab devices/drivers within your <b>local network</b>.
 
 
+# Troubleshoot
+
+You need to update your node version to (v0.12.2+), if you get the follwoing error running the file <code>run.js</code>
+
+
+<code>child = spawn(command, [ 'install', '--prefix', __dirname + '/consumer/event </code><br/>
+<code>TypeError: undefined is not a function</code>
+
+
+
+
 # TODO
 - Instructions to install SOFIA in Windows
 
