@@ -6,7 +6,7 @@ SOFIA enable you to connect multiple SiLA-compliant lab devices to your virtual 
 
 A link to SOFIA's test site can be found here:
 
-http://sila.test.wega-it.com/
+http://82.196.4.104:3000
 
 
 A video of SOFIA controlling a dispenser in the lab can be seen in the following link:
