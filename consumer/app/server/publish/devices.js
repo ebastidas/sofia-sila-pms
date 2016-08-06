@@ -26,6 +26,9 @@
 //   Email: ebastidas3@gmail.com
 //=========================================================================
 
+//
+// PUBLISH COLLECTIONS FROM THE SERVER SIDE
+//
 
 Meteor.publish("device_list", function() {
 	return Devices.find({$or: [{ private: {$ne: true} },{ ownerId: this.userId }]}, {}); //TODO: {transform:function(doc) { var user = Meteor.users.findOne({_id: doc.ownerId }); if(user) doc.ownerId = user.profile.name; return doc; },sort:{createdAt:1}});
