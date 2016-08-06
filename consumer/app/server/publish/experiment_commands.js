@@ -26,6 +26,11 @@
 //   Email: ebastidas3@gmail.com
 //=========================================================================
 
+
+//
+// PUBLISH COLLECTIONS FROM THE SERVER SIDE
+//
+
 //TODO: check for ownerId for every command if the experiment is shared or private
 
 Meteor.publish("experiment_commands", function(experimentId) {
