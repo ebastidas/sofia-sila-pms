@@ -41,6 +41,10 @@ Template.Experiments.helpers({
 	
 });
 
+//
+// SHOW THE LIST OF EXPERIMENTS
+// Search, filter, and sort implementation, then show the items from the collection
+//
 var ExperimentsViewItems = function(cursor) {
 	if(!cursor) {
 		return [];
@@ -88,6 +92,10 @@ var ExperimentsViewItems = function(cursor) {
 	return filtered;
 };
 
+//
+// EXPORT TABLE ITEMS
+// Export and download the shown items from the collection to a local file
+//
 var ExperimentsViewExport = function(cursor, fileType) {
 	var data = ExperimentsViewItems(cursor);
 	var exportFields = ["experimentNumber", "status", "date", "deviceName"];
