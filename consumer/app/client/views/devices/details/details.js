@@ -41,6 +41,10 @@ Template.DevicesDetails.helpers({
 	
 });
 
+
+//
+// RENDER AND SHOW THE LIST OF DETAILS OF THE DEVICE SELECTED
+//
 Template.DevicesDetailsDetailsForm.rendered = function() {
 	
 
