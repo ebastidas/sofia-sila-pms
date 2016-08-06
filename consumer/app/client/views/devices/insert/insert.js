@@ -41,6 +41,11 @@ Template.DevicesInsert.helpers({
 	
 });
 
+
+//
+// RENDER AND SHOW THE LIST OF DETAILS OF THE DEVICE TO INSERT
+//
+
 Template.DevicesInsertInsertForm.rendered = function() {
 	
 
