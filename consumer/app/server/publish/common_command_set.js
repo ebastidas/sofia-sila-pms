@@ -26,6 +26,9 @@
 //   Email: ebastidas3@gmail.com
 //=========================================================================
 
+//
+// PUBLISH COLLECTIONS FROM THE SERVER SIDE
+//
 
 Meteor.publish("common_command_set", function() {
 	return CommonCommandSet.find({}, {});
