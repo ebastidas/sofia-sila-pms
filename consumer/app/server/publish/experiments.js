@@ -27,6 +27,10 @@
 //=========================================================================
 
 
+//
+// PUBLISH COLLECTIONS FROM THE SERVER SIDE
+//
+
 Meteor.publish("experiments", function() {
 	return Experiments.find({$or: [{ private: {$ne: true} },{ ownerId: this.userId }]}, {});
 });
