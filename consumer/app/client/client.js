@@ -39,6 +39,10 @@ App.logout = function() {
 	});
 };
 
+//
+// ROUTER
+// Select the current path/route on the client side
+//
 this.menuItemClass = function(routeName) {
 	if(!routeGranted(routeName)) {
 		return "hidden";
@@ -62,6 +66,10 @@ this.menuItemClass = function(routeName) {
 	return currentPath.indexOf(routePath) === 0 ? "active" : "";
 };
 
+
+//
+// DIFFERENT UTILITY HELPERS FOR THE CLIENT SIDE
+//
 Helpers.menuItemClass = function(routeName) {
 	return menuItemClass(routeName);
 };
