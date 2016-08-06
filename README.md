@@ -2,6 +2,8 @@
 
 SOFIA (<b>S</b>iLA-compliant, <b>O</b>pen source, <b>F</b>ast, <b>I</b>ntelligent <b>A</b>pplication) is a reference implementation of a <a href="http://www.sila-standard.org/standards/pms/">SiLA PMS Consumer</a>. Project SOFIA promotes the development of open source laboratory automation tools.
 
+<img src="http://82.196.4.104:3000/images/image01.png"/>
+
 SOFIA enable you to connect multiple SiLA-compliant lab devices to your virtual lab, share and discover SiLA lab devices in your network, execute SiLA Commands (e.g. move a robot, dispense a liquid) and get data (e.g. temperature, status, duration) from your lab devices, and collaborate and share in real time your protocols/methods runs with any other user in your network.
 
 A link to SOFIA's test site can be found here:
