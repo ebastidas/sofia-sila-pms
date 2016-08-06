@@ -41,6 +41,9 @@ Template.ExperimentsInsert.helpers({
 	
 });
 
+//
+// RENDER AND SHOW THE LIST OF DETAILS OF THE EXPERIMENT TO INSERT
+//
 Template.ExperimentsInsertInsertForm.rendered = function() {
 	
 
