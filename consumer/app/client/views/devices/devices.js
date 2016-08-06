@@ -41,6 +41,10 @@ Template.Devices.helpers({
 	
 });
 
+//
+// SHOW THE LIST OF DEVICES
+// Search, filter, and sort implementation, then show the items from the collection
+//
 var DevicesViewItems = function(cursor) {
 	if(!cursor) {
 		return [];
@@ -88,6 +92,10 @@ var DevicesViewItems = function(cursor) {
 	return filtered;
 };
 
+//
+// EXPORT TABLE ITEMS
+// Export and download the shown items from the collection to a local file
+//
 var DevicesViewExport = function(cursor, fileType) {
 	var data = DevicesViewItems(cursor);
 	var exportFields = ["owner","silaDeviceClassId", "silaDeviceClassVersion", "name", "url", "status", "note"];
