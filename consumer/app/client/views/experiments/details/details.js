@@ -41,6 +41,9 @@ Template.ExperimentsDetails.helpers({
 	
 });
 
+//
+// RENDER AND SHOW THE LIST OF DETAILS OF THE EXPERIMENT SELECTED
+//
 Template.ExperimentsDetailsDetailsForm.rendered = function() {
 	
 
