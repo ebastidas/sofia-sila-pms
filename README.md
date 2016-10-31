@@ -54,7 +54,7 @@ SOFIA will run now at <a href="http://192.168.0.1/">http://192.168.0.1:80/</a> i
 
 # Troubleshoot
 
-You need to update your NodeJS version to (v0.12.2+), if you get the follwoing error running the file <code>run.js</code>:
+You need to update your NodeJS version to (v0.12.2+), if you get the following error running the file <code>run.js</code>:
 
 <code>child = spawn(command, [ 'install', '--prefix', __dirname + '/consumer/event </code><br/>
 <code>TypeError: undefined is not a function</code>
