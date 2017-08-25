@@ -6,11 +6,6 @@ SOFIA (<b>S</b>iLA-compliant, <b>O</b>pen source, <b>F</b>ast, <b>I</b>ntelligen
 
 SOFIA enable you to connect multiple SiLA-compliant lab devices to your virtual lab, share and discover SiLA lab devices in your network, execute SiLA Commands (e.g. move a robot, dispense a liquid) and get data (e.g. temperature, status, duration) from your lab devices, and collaborate and share in real time your protocols/methods runs with any other user in your network.
 
-A link to SOFIA's test site can be found here:
-
-http://82.196.4.104:3000/
-
-
 A video of SOFIA controlling a dispenser in the lab can be seen in the following link:
 
 https://youtu.be/lelSgY8S-pM
